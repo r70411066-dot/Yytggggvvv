@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>مدیورا</title>
+<meta name="description" content="مدیورا؛ دستیار هوشمند سلامت شما">
+<meta name="theme-color" content="#0b4fc4">
+<link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+:root {
+  --bg: #f0f4fa;
+  --card: #ffffff;
+  --tx: #0f172a;
+  --mut: #64748b;
+  --pri: #2563eb;
+  --pri2: #1d4ed8;
+  --pri-soft: rgba(37, 99, 235, 0.12);
+  --bd: #e2e8f0;
+  --sh: 0 4px 24px rgba(15, 23, 42, 0.06);
+  --sh-lg: 0 12px 40px rgba(15, 23, 42, 0.1);
+  --radius: 22px;
+  --radius-sm: 16px;
+  color-scheme: light;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b1220;
+    --card: #131c2e;
+    --tx: #f1f5f9;
+    --mut: #94a3b8;
+    --pri: #60a5fa;
+    --pri2: #3b82f6;
+    --pri-soft: rgba(96, 165, 250, 0.15);
+    --bd: #1e293b;
+    --sh: 0 4px 24px rgba(0, 0, 0, 0.35);
+    --sh-lg: 0 12px 40px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0b1220;
+  --card: #131c2e;
+  --tx: #f1f5f9;
+  --mut: #94a3b8;
+  --pri: #60a5fa;
+  --pri2: #3b82f6;
+  --pri-soft: rgba(96, 165, 250, 0.15);
+  --bd: #1e293b;
+  --sh: 0 4px 24px rgba(0, 0, 0, 0.35);
+  --sh-lg: 0 12px 40px rgba(0, 0, 0, 0.45);
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--tx);
+  font-family: Tahoma, "Vazirmatn", system-ui, -apple-system, sans-serif;
+  display: flex;
+  flex-direction: column;
+  max-width: 560px;
+  margin: auto;
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+main {
+  flex: 1;
+  overflow: auto;
+  padding: 0 18px 110px;
+  scroll-behavior: smooth;
+}
+
+main > * {
+  animation: fadeUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Header */
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 0 14px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand svg {
+  width: 46px;
+  height: 46px;
+  filter: drop-shadow(0 6px 12px rgba(37, 99, 235, 0.35));
+}
+
+.brand b {
+  font-size: 22px;
+  letter-spacing: 0.3px;
+  display: block;
+  line-height: 1.1;
+  font-weight: 700;
+}
+
+.brand small {
+  color: var(--mut);
+  font-size: 11px;
+  letter-spacing: 3.5px;
+  font-weight: 500;
+}
+
+.ib {
+  width: 44px;
+  height: 44px;
+  border-radius: 16px;
+  background: var(--card);
+  box-shadow: var(--sh);
+  display: grid;
+  place-items: center;
+  position: relative;
+  color: var(--pri);
+  padding: 0;
+  border: 1px solid var(--bd);
+  transition: transform 0.15s;
+}
+
+.ib:active { transform: scale(0.94); }
+
+.ib i {
+  position: absolute;
+  top: 9px;
+  left: 10px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #ef4444;
+  border: 2px solid var(--card);
+}
+
+/* Cards */
+.card {
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin-bottom: 14px;
+  box-shadow: var(--sh);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:active {
+  transform: scale(0.985);
+}
+
+/* Hero */
+.hero {
+  background: linear-gradient(145deg, #0f2b5b 0%, #1e4d9c 45%, #3b82f6 100%);
+  color: #fff;
+  border: 0;
+  position: relative;
+  overflow: hidden;
+  padding: 24px 20px;
+  box-shadow: 0 16px 40px rgba(37, 99, 235, 0.28);
+}
+
+.hero:before,
+.hero:after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.hero:before {
+  width: 180px;
+  height: 180px;
+  left: -55px;
+  top: -65px;
+}
+
+.hero:after {
+  width: 120px;
+  height: 120px;
+  right: -35px;
+  bottom: -45px;
+}
+
+.hero > * { position: relative; }
+
+.ecg {
+  position: absolute !important;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  opacity: 0.22;
+  width: 100%;
+  height: 42px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 30px;
+  padding: 7px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Quick actions grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.q {
+  text-align: center;
+  cursor: pointer;
+  padding: 18px 8px;
+  font-size: 13px;
+  font-weight: 500;
+  margin: 0;
+  transition: transform 0.18s;
+}
+
+.q:active { transform: scale(0.94); }
+
+.tile {
+  width: 56px;
+  height: 56px;
+  border-radius: 20px;
+  margin: 0 auto 10px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: linear-gradient(145deg, #60a5fa, #2563eb);
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.32);
+}
+
+.tile.t2 {
+  background: linear-gradient(145deg, #34d399, #059669);
+  box-shadow: 0 10px 20px rgba(5, 150, 105, 0.3);
+}
+
+.tile.t3 {
+  background: linear-gradient(145deg, #a78bfa, #7c3aed);
+  box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3);
+}
+
+/* Buttons */
+button {
+  font: inherit;
+  cursor: pointer;
+  border: 0;
+  border-radius: 16px;
+  padding: 12px 18px;
+  background: linear-gradient(135deg, var(--pri), var(--pri2));
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  justify-content: center;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.28);
+  font-weight: 600;
+}
+
+button:active {
+  transform: scale(0.96);
+}
+
+button.g {
+  background: transparent;
+  color: var(--pri);
+  border: 1.5px solid var(--pri);
+  box-shadow: none;
+}
+
+button.r {
+  background: linear-gradient(135deg, #f87171, #dc2626);
+  box-shadow: 0 6px 16px rgba(220, 38, 38, 0.25);
+}
+
+/* Form elements */
+input, select, textarea {
+  font: inherit;
+  width: 100%;
+  padding: 13px 15px;
+  border-radius: 16px;
+  border: 1.5px solid var(--bd);
+  background: var(--card);
+  color: var(--tx);
+  margin: 5px 0;
+  outline: 0;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--pri);
+  box-shadow: 0 0 0 4px var(--pri-soft);
+}
+
+/* Bottom Navigation */
+nav {
+  position: fixed;
+  bottom: 14px;
+  left: 14px;
+  right: 14px;
+  max-width: 532px;
+  margin: auto;
+  display: flex;
+  background: var(--card);
+  border-radius: 26px;
+  box-shadow: var(--sh-lg);
+  padding: 8px;
+  border: 1px solid var(--bd);
+  margin-bottom: env(safe-area-inset-bottom, 0px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+nav a {
+  flex: 1;
+  text-align: center;
+  font-size: 11px;
+  color: var(--mut);
+  cursor: pointer;
+  padding: 9px 4px;
+  border-radius: 20px;
+  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  font-weight: 500;
+}
+
+nav a svg {
+  display: block;
+  margin: 0 auto 4px;
+  transition: transform 0.25s;
+}
+
+nav a.on {
+  color: #fff;
+  background: linear-gradient(135deg, var(--pri), var(--pri2));
+  font-weight: 700;
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+}
+
+nav a.on svg {
+  transform: scale(1.08);
+}
+
+/* Offer box */
+.offer {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+  color: #065f46;
+  border-radius: 20px;
+  padding: 15px;
+  margin-bottom: 14px;
+  font-size: 14px;
+  border: 1px solid #a7f3d0;
+  box-shadow: 0 4px 16px rgba(5, 150, 105, 0.1);
+}
+
+.offer .tile {
+  width: 46px;
+  height: 46px;
+  border-radius: 15px;
+  margin: 0;
+  flex: none;
+  background: linear-gradient(145deg, #34d399, #059669);
+}
+
+/* Chips */
+.chips {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 0 12px;
+  scrollbar-width: none;
+}
+
+.chips::-webkit-scrollbar { display: none; }
+
+.chips button {
+  white-space: nowrap;
+  background: var(--card);
+  color: var(--tx);
+  border: 1.5px solid var(--bd);
+  box-shadow: none;
+  padding: 9px 16px;
+  font-weight: 500;
+}
+
+.chips .on {
+  background: linear-gradient(135deg, var(--pri), var(--pri2));
+  color: #fff;
+  border: 0;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+/* Tiers */
+.silver { --t: #94a3b8; }
+.gold { --t: #d97706; }
+.diamond { --t: #9333ea; }
+
+.tier {
+  border: 2px solid var(--t);
+  position: relative;
+}
+
+.tier h3 {
+  color: var(--t);
+  margin: 0 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mut {
+  color: var(--mut);
+  font-size: 13px;
+}
+
+.badge {
+  background: var(--pri-soft);
+  color: var(--pri);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Doctor card */
+.doc {
+  display: flex;
+  gap: 14px;
+}
+
+.doc > svg {
+  width: 64px;
+  height: 64px;
+  flex: none;
+  border-radius: 50%;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.doc > div { flex: 1; }
+
+.ver {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #059669;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td, th {
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--bd);
+  text-align: center;
+  font-size: 13px;
+}
+
+th {
+  color: var(--mut);
+  font-weight: 600;
+}
+
+h3 {
+  margin: 22px 0 12px;
+  font-size: 17px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+h3 svg { color: var(--pri); }
+
+/* Dark mode offer adjustment */
+:root[data-theme="dark"] .offer,
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .offer {
+    background: linear-gradient(135deg, #064e3b, #065f46);
+    color: #a7f3d0;
+    border-color: #047857;
+  }
+}
+
+/* ===== Home v2 ===== */
+.hx-hi{display:flex;align-items:center;gap:12px;margin:2px 2px 16px}
+.hx-av{width:48px;height:48px;border-radius:50%;flex:none;display:grid;place-items:center;color:#fff;font-weight:800;font-size:19px;background:linear-gradient(145deg,#60a5fa,#2563eb);box-shadow:0 8px 18px rgba(37,99,235,.3)}
+.hx-hi small{display:block;color:var(--mut);font-size:12.5px}
+.hx-hi b{font-size:17px}
+.hero{padding:26px 20px 34px;border-radius:28px}
+.hx-hero-t{font-size:23px;font-weight:800;line-height:1.55;margin:4px 0 6px}
+.hx-hero-s{opacity:.86;font-size:13.5px;margin-bottom:18px;max-width:82%}
+.hx-cta{background:#fff;color:#1d4ed8;box-shadow:0 8px 20px rgba(0,0,0,.18);padding:12px 22px;border-radius:16px}
+.hx-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 16px}
+.hx-st{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:12px 6px;text-align:center;box-shadow:var(--sh)}
+.hx-st b{display:block;font-size:16px;margin-bottom:2px}
+.hx-st span{color:var(--mut);font-size:11.5px}
+.hxq .grid{grid-template-columns:repeat(4,1fr);gap:10px}
+.hxq .q{padding:14px 4px;font-size:12px;line-height:1.55;border-radius:20px}
+.hxq .tile{width:46px;height:46px;border-radius:16px;margin-bottom:8px}
+.tile.t4{background:linear-gradient(145deg,#fbbf24,#d97706);box-shadow:0 10px 20px rgba(217,119,6,.3)}
+.hx-sec{display:flex;align-items:center;justify-content:space-between;margin:22px 2px 12px}
+.hx-sec h3{margin:0}
+.hx-sec a{color:var(--pri);font-size:13px;font-weight:600;cursor:pointer}
+.hx-scroll{display:flex;gap:12px;overflow-x:auto;padding:2px 2px 14px;scroll-snap-type:x mandatory;scrollbar-width:none}
+.hx-scroll::-webkit-scrollbar{display:none}
+.hx-doc{flex:none;width:138px;scroll-snap-align:start;background:var(--card);border:1px solid var(--bd);border-radius:22px;padding:14px 10px;text-align:center;box-shadow:var(--sh);cursor:pointer}
+.hx-doc:active{transform:scale(.97)}
+.hx-doc>svg,.hx-doc>img{width:64px;height:64px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 8px}
+.hx-doc b{display:block;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hx-doc span{display:block;color:var(--mut);font-size:12px;margin:2px 0 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hx-doc em{font-style:normal;font-size:12px;color:var(--pri);font-weight:700}
+.hx-bk{display:flex;gap:12px;align-items:center;border-inline-start:4px solid var(--pri)}
+.hx-bk .bi{width:42px;height:42px;border-radius:14px;background:var(--pri-soft);color:var(--pri);display:grid;place-items:center;flex:none}
+.hx-bk b{display:block}
+.hx-tip{display:flex;gap:12px;align-items:center;background:var(--pri-soft);border-color:transparent;box-shadow:none}
+.brand img{width:46px;height:46px;border-radius:12px;filter:drop-shadow(0 6px 12px rgba(37,99,235,.35))}
+.auth-logo img{width:78px;height:78px;border-radius:18px;filter:drop-shadow(0 8px 18px rgba(0,0,0,.3))}
+</style>
+<style>
+.auth-h{text-align:center;padding:34px 10px 22px;background:linear-gradient(135deg,#0b2a55,#1565c0 60%,#2b8cf0);color:#fff;margin:0 -16px 18px;border-radius:0 0 34px 34px;position:relative;overflow:hidden}
+.auth-h:before{content:"";position:absolute;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.08);left:-60px;top:-70px}
+.auth-logo svg{width:78px;height:78px;filter:drop-shadow(0 8px 18px rgba(0,0,0,.3))}.auth-h h1{margin:10px 0 4px;font-size:28px}.auth-h p{margin:0;opacity:.85;font-size:13px}
+.auth-c{margin-top:-6px}.seg{display:flex;background:var(--bg);border-radius:16px;padding:4px;margin-bottom:14px}.seg button{flex:1;background:transparent;color:var(--mut);box-shadow:none}.seg .on{background:var(--card);color:var(--pri);box-shadow:var(--sh);font-weight:bold}
+.fld{position:relative}.fld svg{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--mut)}.fld input{padding-right:44px}
+.feat{display:flex;justify-content:space-around;color:var(--mut);font-size:12px;margin-top:6px}.feat span{display:flex;flex-direction:column;align-items:center;gap:5px}.feat svg{color:var(--pri)}
+.ok{text-align:center}.okc{width:84px;height:84px;border-radius:50%;margin:8px auto 12px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,#2ed17a,#0e8f4a);box-shadow:0 10px 24px rgba(14,143,74,.35)}
+.doc>img{width:62px;height:62px;border-radius:50%;object-fit:cover;flex:none;box-shadow:0 5px 14px rgba(0,0,0,.15)}.rt{display:flex;align-items:center;gap:2px;margin-top:4px;cursor:pointer}
+.md{position:fixed;inset:0;background:rgba(5,15,35,.55);z-index:50;display:flex;align-items:flex-end;justify-content:center}.sheet{background:var(--card);width:100%;max-width:560px;max-height:82vh;overflow:auto;border-radius:26px 26px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));animation:up .25s}
+.rstars{display:flex;gap:6px;justify-content:center;margin:14px 0;cursor:pointer}.at{flex-wrap:wrap}.pv{width:62px;height:62px;border-radius:50%;object-fit:cover;display:none;margin:6px 0}
+.cb{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+.cm{max-width:88%;padding:10px 13px;border-radius:18px;line-height:1.9;font-size:14.5px;word-break:break-word}
+.cm.bot{align-self:flex-end;background:var(--card);border:1px solid var(--bd);border-bottom-left-radius:6px}
+.cm.me{align-self:flex-start;background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff;border-bottom-right-radius:6px}
+.cm.warn{background:#fff4e0;color:#8a4b00;border:1px solid #ffd493}
+.cin{display:flex;gap:8px;align-items:center}.cin input{margin:0;flex:1}.cin button{flex:none}
+.pr2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}.pr2 .card{margin:0;text-align:center;cursor:pointer;padding:14px 8px}
+.chk{display:flex;gap:10px;align-items:flex-start;margin:12px 2px 0;line-height:1.8;font-size:13.5px;cursor:pointer}.chk input{width:auto;margin:4px 0 0;flex:none}
+</style></head>
+<body>
+<main id="m"></main>
+<nav id="n"></nav>
+<script>
+const fa = n => Number(n).toLocaleString('fa-IR');
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+const P = {
+  home: '<path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/>',
+  grid: '<rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/>',
+  cal: '<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 11h18M12 14v4M10 16h4"/>',
+  user: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>',
+  steth: '<path d="M6 3v6a4 4 0 008 0V3"/><path d="M10 13v2a5 5 0 0010 0v-1"/><circle cx="20" cy="12" r="2"/>',
+  pill: '<rect x="2" y="8" width="20" height="8" rx="4" transform="rotate(-45 12 12)"/><path d="M9 9l6 6"/>',
+  coin: '<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.8c0-1.2 1.2-1.8 2.5-1.8s2.5.6 2.5 1.8c0 2.4-5 1.4-5 4 0 1.2 1.2 1.8 2.5 1.8s2.5-.6 2.5-1.8"/>',
+  gift: '<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v9h14v-9M12 8v13"/><path d="M12 8C10 4 6 5 7 8c.5 1 3 .8 5 0zM12 8c2-4 6-3 5 0-.5 1-3 .8-5 0z"/>',
+  bell: '<path d="M6 16v-5a6 6 0 0112 0v5l2 2H4z"/><path d="M10 21h4"/>',
+  gear: '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/>',
+  moon: '<path d="M20 14.5A8 8 0 019.5 4 8 8 0 1020 14.5z"/>',
+  check: '<path d="M20 6L9 17l-5-5"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
+  shield: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5L16 9.5"/>',
+  chart: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+  list: '<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',
+  key: '<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3"/>',
+  out: '<path d="M9 21H5V3h4M16 17l5-5-5-5M21 12H9"/>',
+  heart: '<path d="M12 21s-8-5.3-8-11a4.5 4.5 0 018-2.8A4.5 4.5 0 0120 10c0 5.7-8 11-8 11z"/>',
+  flask: '<path d="M9 3h6M10 3v6l-5 9a2 2 0 002 3h10a2 2 0 002-3l-5-9V3"/>'
+};
+
+const ic = (n, s = 22) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${P[n] || ''}</svg>`;
+const sic = (i, s = 26) => i == '💊' ? ic('pill', s) : P[i] ? ic(i, s) : `<span style="font-size:${s - 2}px">${esc(i)}</span>`;
+
+const LOGO = `<img src="icon-192.png" alt="مدیورا">`;
+
+const TI = {
+  silver: `<svg viewBox="0 0 32 32"><defs><linearGradient id="gs" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f8fafc"/><stop offset="1" stop-color="#94a3b8"/></linearGradient></defs><circle cx="16" cy="16" r="13" fill="url(#gs)" stroke="#64748b" stroke-width="1.5"/><path d="M16 8l2.4 5 5.4.7-4 3.7 1 5.4-4.8-2.6-4.8 2.6 1-5.4-4-3.7 5.4-.7z" fill="#fff"/></svg>`,
+  gold: `<svg viewBox="0 0 32 32"><defs><linearGradient id="gg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fde68a"/><stop offset="1" stop-color="#d97706"/></linearGradient></defs><path d="M3 25L2 9l8 6 6-9 6 9 8-6-1 16z" fill="url(#gg)" stroke="#b45309" stroke-width="1.2" stroke-linejoin="round"/><circle cx="16" cy="6" r="1.8" fill="#fef3c7"/></svg>`,
+  diamond: `<svg viewBox="0 0 32 32"><defs><linearGradient id="gd" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e9d5ff"/><stop offset="1" stop-color="#7e22ce"/></linearGradient></defs><path d="M16 3l11 8-11 18L5 11z" fill="url(#gd)"/><path d="M5 11h22M11 11l5 18 5-18M16 3l-5 8M16 3l5 8" stroke="#fff" stroke-opacity=".55" fill="none"/></svg>`
+};
+
+const ti = (k, s = 22) => `<span style="display:inline-block;width:${s}px;height:${s}px;vertical-align:middle">${TI[k]}</span>`;
+
+const ECG = `<svg class="ecg" viewBox="0 0 400 40" preserveAspectRatio="none"><path d="M0 22h120l12-16 14 32 12-24 10 8h232" stroke="#fff" stroke-width="2" fill="none"/></svg>`;
+
+function avatar(i) {
+  const bg = ['#93c5fd', '#6ee7b7', '#fcd34d', '#c4b5fd', '#f9a8d4', '#7dd3fc'][i % 6];
+  const hair = ['#3b2a20', '#1c1c1c', '#6b3f1d', '#2a1a12', '#8b5a2b', '#111'][i % 6];
+  const sk = ['#f1c9a5', '#e8b88f', '#f6d3b3'][i % 3];
+  return `<svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="32" fill="${bg}"/><path d="M8 64c2-13 11-18 24-18s22 5 24 18z" fill="#fff"/><path d="M26 46l6 9 6-9" fill="#2563eb"/><rect x="28" y="34" width="8" height="9" rx="3" fill="${sk}"/><ellipse cx="32" cy="26" rx="10.5" ry="12" fill="${sk}"/><path d="M21 25c-1-10 5-15 11-15s12 5 11 15c-2-5-6-7-11-7s-9 2-11 7z" fill="${hair}"/><path d="M24 47v5a4.5 4.5 0 009 0" stroke="#334155" stroke-width="2" fill="none"/><circle cx="28" cy="27" r="1.2" fill="#334155"/><circle cx="36" cy="27" r="1.2" fill="#334155"/></svg>`;
+}
+
+const DAY = 864e5; let OFFER_DAYS = 5, OFFER_PCT = 10;
+
+const TIERS = {
+  silver: {
+    n: 'نقره‌ای', disc: 5,
+    p: [[7, 20, 10], [30, 50, 25], [90, 130, 65], [180, 240, 120], [365, 400, 200]],
+    f: ['تخفیف ۵٪ ویزیت', 'پشتیبانی عادی']
+  },
+  gold: {
+    n: 'طلایی', disc: 10,
+    p: [[7, 30, 15], [30, 80, 40], [90, 210, 105], [180, 390, 195], [365, 700, 350]],
+    f: ['تخفیف ۱۰٪ ویزیت', 'پشتیبانی اولویت‌دار']
+  },
+  diamond: {
+    n: 'الماسی', disc: 15,
+    p: [[7, 45, 23], [30, 120, 60], [90, 320, 160], [180, 600, 300], [365, 1000, 500]],
+    f: ['تخفیف ۱۵٪ ویزیت', 'پشتیبانی ویژه', 'نشان اختصاصی کاربر الماسی']
+  }
+};
+
+const DEF = {
+  coins: 20, tier: null, exp: 0, bk: [], orders: [], first: 0, second: false, theme: '', tab: 'home',
+  spec: 'همه', q: '', pt: 'silver', pin: '1234',
+  docs: [
+    ['دکتر سارا احمدی', 'عمومی', 300],
+    ['دکتر علی رضایی', 'قلب و عروق', 700],
+    ['دکتر مریم کریمی', 'پوست و مو', 500],
+    ['دکتر امیر نوری', 'مغز و اعصاب', 800],
+    ['دکتر نگار صادقی', 'کودکان', 450],
+    ['دکتر حسین موسوی', 'ارتوپدی', 600]
+  ],
+  secs: [{
+    id: 1, t: 'معرفی دارو', i: 'pill', type: 'info',
+    desc: 'اطلاعات عمومی داروها در این بخش توسط مدیر قرار می‌گیرد.\nتجویز دارو و تعیین مقدار مصرف باید توسط پزشک انجام شود.',
+    price: 0
+  }]
+};
+
+let S;
+try {
+  S = { ...DEF, ...JSON.parse(localStorage.getItem('medura') || '{}') };
+} catch (e) {
+  S = { ...DEF };
+}
+
+const save = () => {
+  try { localStorage.setItem('medura', JSON.stringify(S)); } catch (e) {}
+};
+
+const tier = () => S.tier && S.exp > Date.now() ? S.tier : null;
+const days = () => Math.max(0, Math.ceil((S.exp - Date.now()) / DAY));
+const offerLeft = () => S.first && !S.second ? S.first + OFFER_DAYS * DAY - Date.now() : 0;
+
+function theme() {
+  if (S.theme) document.documentElement.dataset.theme = S.theme;
+}
+
+function go(t) {
+  S.tab = t;
+  save();
+  draw();
+  m.scrollTop = 0;
+}
+
+function draw() {
+  const T = [
+    ['home', 'home', 'خانه'],
+    ['svc', 'grid', 'خدمات'],
+    ['ai', 'heart', 'مشاوره'],
+    ['visit', 'cal', 'نوبت‌ها'],
+    ['acc', 'user', 'حساب کاربری']
+  ];
+  n.innerHTML = T.map(x =>
+    `<a class="${S.tab == x[0] || ((S.tab == 'adm' || S.tab == 'dpanel') && x[0] == 'acc') ? 'on' : ''}" onclick="go('${x[0]}')">${ic(x[1], 23)}${x[2]}</a>`
+  ).join('');
+  m.innerHTML = hdr() + ({ home, svc, visit, acc, adm, kyc, dpanel, ai: aiTab })[S.tab]();
+}
+
+function hdr() {
+  return `<div class="top">
+    <div class="brand" onclick="logoTap()">${LOGO}<div><b>مدیورا</b><small>MEDURA</small></div></div>
+    <button class="ib" onclick="alert(CFG.notice||'اعلان جدیدی ندارید')">${ic('bell', 21)}${offerLeft() > 0 ? '<i></i>' : ''}</button>
+  </div>`;
+}
+
+function offerBox() {
+  const l = offerLeft();
+  if (l <= 0) return '';
+  const d = Math.floor(l / DAY);
+  const h = Math.floor(l % DAY / 36e5);
+  return `<div class="offer">
+    <div class="tile">${ic('gift', 24)}</div>
+    <div>
+      <b>${fa(OFFER_PCT)}٪ تخفیف ویزیت دوم</b>
+      <div style="font-size:13px;opacity:.9">فقط ${fa(d)} روز و ${fa(h)} ساعت دیگر مهلت دارید</div>
+    </div>
+  </div>`;
+}
+
+function hxDoc(i) { S.spec = 'همه'; S.q = S.docs[i][0]; go('visit'); }
+
+function home() {
+  const t = tier();
+  const h = new Date().getHours();
+  const hi = h < 5 ? 'شب بخیر' : h < 12 ? 'صبح بخیر' : h < 17 ? 'ظهر بخیر' : h < 20 ? 'عصر بخیر' : 'شب بخیر';
+  const nm = (S.fn || '').trim();
+  const q = [
+    ['visit', 'cal', 'ویزیت گرفتن', ''],
+    ...S.secs.slice(0, 2).map((s, i) => ['svc', s.i, s.t, 't' + (i + 2)]),
+    S.role == 'doctor' ? ['dpanel', 'steth', 'پنل پزشک', 't4'] : ['acc', 'gift', 'اشتراک ویژه', 't4']
+  ];
+  if (q.length < 4) q.push(['svc', 'grid', 'همه خدمات', 't3']);
+  const top = S.docs.map((d, i) => [d, i]).sort((a, b) => (b[0][5] || 0) - (a[0][5] || 0)).slice(0, 8);
+  const last = S.bk.slice(-3).reverse();
+  return `
+    <div class="hx-hi">
+      <div class="hx-av">${nm ? esc(nm[0]) : ic('user', 24)}</div>
+      <div><small>${hi}</small><b>${nm ? esc(nm) + ' عزیز' : 'به مدیورا خوش آمدید'}</b></div>
+    </div>
+    <div class="card hero">
+      <h2 class="hx-hero-t">سلامتی شما،<br>اولویت ماست</h2>
+      <div class="hx-hero-s">پزشک متخصص، مشاوره آنلاین و نوبت‌دهی سریع، همه در یک برنامه.</div>
+      <button class="hx-cta" onclick="go('visit')">${ic('cal', 18)} گرفتن نوبت</button>
+      ${ECG}
+    </div>
+    ${S.role == 'doctor' ? '' : `<div class="hx-stats">
+      <div class="hx-st"><b>${fa(S.coins)}</b><span>سکه شما</span></div>
+      <div class="hx-st"><b>${t ? fa(days()) + ' روز' : '—'}</b><span>${t ? 'اشتراک ' + TIERS[t].n : 'بدون اشتراک'}</span></div>
+      <div class="hx-st"><b>${fa(S.bk.length)}</b><span>نوبت ثبت‌شده</span></div>
+    </div>`}
+    ${S.role == 'doctor' ? '' : offerBox()}
+    ${S.role == 'doctor' ? '' : promoRow()}
+    <div class="hxq"><div class="grid">${q.map(x =>
+      `<div class="card q" onclick="go('${x[0]}')">
+        <div class="tile ${x[3]}">${sic(x[1], 24)}</div>
+        ${esc(x[2])}
+      </div>`
+    ).join('')}</div></div>
+    ${top.length ? `<div class="hx-sec"><h3>${ic('steth', 20)} پزشکان برتر</h3><a onclick="go('visit')">مشاهده همه</a></div>
+    <div class="hx-scroll">${top.map(([d, i]) =>
+      `<div class="hx-doc" onclick="hxDoc(${i})">${docAv(d, i)}<b>${esc(d[0])}</b><span>${esc(d[1])}</span><em>${d[6] ? '★ ' + fa(d[5]) : fa(d[2]) + ' هزار تومان'}</em></div>`
+    ).join('')}</div>` : ''}
+    <div class="hx-sec"><h3>${ic('cal', 20)} آخرین نوبت‌ها</h3>${S.bk.length ? '<a onclick="go(\'visit\')">همه</a>' : ''}</div>
+    ${last.length
+      ? last.map(b =>
+          `<div class="card hx-bk"><div class="bi">${ic('cal', 20)}</div><div><b>${esc(b.doc)}</b><div class="mut">${esc(b.when)} · ${esc(b.kind)}</div></div></div>`
+        ).join('')
+      : '<div class="card mut" style="text-align:center">هنوز نوبتی رزرو نکرده‌اید.</div>'}
+    <div class="card hx-tip">
+      <div class="tile" style="margin:0;width:46px;height:46px;border-radius:15px;flex:none">${ic('bell', 20)}</div>
+      <div class="mut" style="flex:1">${S.role == 'doctor' ? 'از «پنل پزشک» می‌توانید اطلاعات و نوشته‌های خود را مدیریت کنید.' : 'برای تخفیف ویزیت می‌توانید اشتراک ویژه تهیه کنید.'}</div>
+    </div>`;
+}
+
+function svc() {
+  return `<h3>${ic('grid', 20)} خدمات</h3>` +
+    (S.secs.map((s, k) =>
+      `<div class="card">
+        <div class="row">
+          <div class="row" style="justify-content:flex-start">
+            <div class="tile t${k % 2 + 2}" style="margin:0;width:48px;height:48px;border-radius:16px">${sic(s.i, 24)}</div>
+            <b>${esc(s.t)}</b>
+          </div>
+          ${s.price ? `<span class="badge">${fa(s.price)} هزار تومان</span>` : ''}
+        </div>
+        <p style="white-space:pre-wrap;line-height:1.9;margin:12px 0 0">${esc(s.desc)}</p>
+        ${s.type == 'order'
+          ? `<input id="note${s.id}" placeholder="توضیحات سفارش (اختیاری)">
+             <button style="width:100%;margin-top:8px" onclick="order(${s.id})">ثبت سفارش</button>`
+          : ''}
+      </div>`
+    ).join('') || '<div class="card mut">هنوز خدمتی اضافه نشده.</div>');
+}
+
+function order(id) {
+  const s = S.secs.find(x => x.id == id);
+  S.orders.push({
+    sid: id, t: s.t,
+    note: document.getElementById('note' + id).value,
+    when: new Date().toLocaleDateString('fa-IR'),
+    price: s.price
+  });
+  save();
+  alert('سفارش شما ثبت شد.');
+  draw();
+}
+
+function bestPct() {
+  const sub = tier() ? TIERS[tier()].disc : 0;
+  const off = offerLeft() > 0 ? OFFER_PCT : 0;
+  return { pct: Math.max(sub, off), off: off > sub };
+}
+
+function visit() {
+  const { pct, off } = bestPct();
+  const SP = ['همه', ...new Set(S.docs.map(d => d[1]))];
+  const list = S.docs.map((d, i) => [d, i])
+    .filter(([d]) => (S.spec == 'همه' || d[1] == S.spec) && (d[0] + d[1]).includes(S.q));
+
+  return `<h3>${ic('steth', 20)} ویزیت گرفتن</h3>
+    ${offerBox()}
+    <input placeholder="جست‌وجوی پزشک یا تخصص" value="${esc(S.q)}" oninput="S.q=this.value;draw2()" id="sq">
+    <div class="chips" style="margin-top:10px">${SP.map(s =>
+      `<button class="${S.spec == s ? 'on' : ''}" onclick="S.spec='${esc(s)}';draw()">${esc(s)}</button>`
+    ).join('')}</div>
+    ${list.map(([d, i]) => {
+      const p = d[2] * (100 - pct) / 100;
+      return `<div class="card">
+        <div class="doc">
+          ${docAv(d, i)}
+          <div>
+            <div class="row">
+              <b>${esc(d[0])}</b>
+              <span class="badge">${esc(d[1])}</span>
+            </div>
+            <div class="ver">${ic('shield', 14)} مدرک تأییدشده</div>${rate(d)}${d[7]!=null?`<div class="mut" style="margin-top:2px">سابقه ${fa(d[7])} سال</div>`:''}<button class="g" style="padding:6px 12px;margin-top:6px" onclick="docInfo(${i})">${ic('user', 15)} اطلاعات و نوشته‌ها</button>
+            <div class="mut" style="margin-top:4px">
+              ${pct ? `<s>${fa(d[2])}</s> ` : ''}
+              <b style="color:var(--tx)">${fa(p)}</b> هزار تومان
+              ${pct ? ` · ${fa(pct)}٪ تخفیف${off ? ' ویزیت دوم' : ''}` : ''}
+            </div>
+          </div>
+        </div>
+        <div class="row" style="margin-top:14px">
+          <select id="k${i}"><option>حضوری</option><option>مشاوره آنلاین</option></select>
+          <select id="w${i}">${slots()}</select>
+        </div>
+        <button style="width:100%;margin-top:10px" onclick="book(${i})">${ic('cal', 18)} رزرو نوبت</button>
+      </div>`;
+    }).join('') || '<div class="card mut">پزشکی یافت نشد.</div>'}
+    <h3>${ic('list', 20)} نوبت‌های من</h3>
+    ${S.bk.map((b, i) =>
+      `<div class="card row">
+        <div>
+          <b>${esc(b.doc)}</b>
+          <div class="mut">${esc(b.when)} · ${esc(b.kind)} · ${fa(b.price)} هزار تومان</div>
+        </div>
+        ${bkBtns(b)}
+      </div>`
+    ).join('') || '<div class="card mut">نوبتی ندارید.</div>'}
+    ${S.orders.length
+      ? `<h3>${ic('list', 20)} سفارش‌های من</h3>` +
+        S.orders.map(o =>
+          `<div class="card"><b>${esc(o.t)}</b> <span class="mut">${esc(o.when)}</span><div class="mut">${esc(o.note)}</div></div>`
+        ).join('')
+      : ''}`;
+}
+
+function draw2() {
+  const p = document.getElementById('sq').selectionStart;
+  draw();
+  const g = document.getElementById('sq');
+  g.focus();
+  g.setSelectionRange(p, p);
+}
+
+function slots() {
+  let o = '';
+  for (let d = 1; d <= 3; d++) {
+    const t = new Date(Date.now() + d * DAY).toLocaleDateString('fa-IR', { weekday: 'long', day: 'numeric', month: 'long' });
+    ['۱۰:۰۰', '۱۶:۰۰', '۱۸:۳۰'].forEach(h => o += `<option>${t} ${h}</option>`);
+  }
+  return o;
+}
+
+function book(i) {
+  const { pct, off } = bestPct();
+  const d = S.docs[i];
+  const k = document.getElementById('k' + i).value;
+  const w = document.getElementById('w' + i).value;
+  S.bk.push({ doc: d[0], kind: k, when: w, price: d[2] * (100 - pct) / 100 });
+  if (!S.first) S.first = Date.now();
+  else if (off) S.second = true;
+  else if (offerLeft() > 0 && S.bk.length >= 2) S.second = true;
+  save();
+  alert(S.bk.length == 1
+    ? `نوبت ثبت شد. ${fa(OFFER_PCT)}٪ تخفیف ویزیت بعدی تا ${fa(OFFER_DAYS)} روز آینده فعال است`
+    : 'نوبت شما ثبت شد.');
+  draw();
+}
+
+function acc() {
+  const t = tier();
+  const Q = TIERS[S.pt];
+  return `
+    <div class="card row">
+      <div class="row" style="justify-content:flex-start">
+        <div class="tile" style="margin:0;width:54px;height:54px;border-radius:50%">${ic('user', 26)}</div>
+        <div>
+          <b>حساب کاربری</b>
+          <div class="mut">${S.role == 'doctor' ? 'حساب پزشک' : t ? `اشتراک ${TIERS[t].n} · ${fa(days())} روز` : 'بدون اشتراک'}</div>
+        </div>
+      </div>
+      <button class="ib" onclick="S.theme=(document.documentElement.dataset.theme=='dark'?'light':'dark');theme();save()">${ic('moon', 20)}</button>
+    </div>
+    ${S.role == 'doctor' ? '' : `
+    <div class="card row">
+      <div class="row" style="justify-content:flex-start">
+        <span style="color:#d97706">${ic('coin', 30)}</span>
+        <div>
+          <b>${fa(S.coins)} سکه</b>
+          <div class="mut">هر ۵۰ سکه معادل ۱۰۰ هزار تومان</div>
+        </div>
+      </div>
+      <button onclick="buyCoins()">${ic('plus', 16)} خرید</button>
+    </div>
+    <h3>${ti('gold', 22)} اشتراک ویژه</h3>
+    <div class="chips">${Object.keys(TIERS).map(k =>
+      `<button class="${S.pt == k ? 'on' : ''}" onclick="S.pt='${k}';draw()">${ti(k, 18)} ${TIERS[k].n}</button>`
+    ).join('')}</div>
+    <div class="card tier ${S.pt}">
+      <h3 style="margin-top:0">${ti(S.pt, 30)} اشتراک ${Q.n}</h3>
+      <div style="margin-bottom:12px">${Q.f.map(x =>
+        `<div class="ver" style="display:flex;font-size:14px;color:var(--tx);gap:7px;margin:5px 0">
+          <span style="color:#059669">${ic('check', 16)}</span>${x}
+        </div>`
+      ).join('')}</div>
+      <table>
+        <tr><th>مدت</th><th>قیمت</th><th>سکه</th><th></th></tr>
+        ${Q.p.map((r, i) =>
+          `<tr>
+            <td>${dlabel(r[0])}</td>
+            <td>${fa(r[1] * 1000)}</td>
+            <td>${fa(r[2])}</td>
+            <td style="white-space:nowrap"><button class="g" style="padding:7px 10px" onclick="sub(${i})">با سکه</button> <button style="padding:7px 10px" onclick="PAY.buySub(${i})">مایکت</button></td>
+          </tr>`
+        ).join('')}
+      </table>
+    </div>
+`}
+    <button class="g" style="width:100%" onclick="openAdmin()">${ic('gear', 19)} پنل مدیریت</button>`;
+}
+
+function sub(i) {
+  const r = TIERS[S.pt].p[i];
+  if (S.coins < r[2]) {
+    alert('موجودی سکه کافی نیست.');
+    return;
+  }
+  S.coins -= r[2];
+  const base = tier() == S.pt ? S.exp : Date.now();
+  S.tier = S.pt;
+  S.exp = base + r[0] * DAY;
+  save();
+  alert('اشتراک فعال شد');
+  draw();
+}
+
+function buyCoins() { PAY.openCoins(); }
+
+function openAdmin() {
+  const p = prompt('رمز مدیر را وارد کنید (پیش‌فرض: 1234)');
+  if (p === S.pin) {
+    S.tab = 'adm';
+    draw();
+  } else if (p !== null) {
+    alert('رمز اشتباه است.');
+  }
+}
+
+function adm() {
+  return `
+    <div class="row">
+      <h3>${ic('gear', 20)} پنل مدیریت</h3>
+      <button class="g" onclick="go('acc')">${ic('out', 16)} خروج</button>
+    </div>
+    <div class="card">
+      <b>${ic('chart', 18)} آمار</b>
+      <div class="mut" style="margin-top:6px">نوبت‌ها: ${fa(S.bk.length)} · سفارش‌ها: ${fa(S.orders.length)} · پزشکان: ${fa(S.docs.length)} · بخش‌ها: ${fa(S.secs.length)}</div>
+    </div>
+    <div class="card">
+      <b>${ic('plus', 18)} افزودن بخش جدید به برنامه</b>
+      <input id="st" placeholder="نام بخش (مثلاً سفارش آزمایش)">
+      <input id="si" placeholder="آیکون: flask، pill، steth، heart، gift، shield، cal یا ایموجی" value="flask">
+      <select id="sy">
+        <option value="order">سفارش‌پذیر (کاربر می‌تواند سفارش دهد)</option>
+        <option value="info">اطلاع‌رسانی (فقط نمایش محتوا)</option>
+      </select>
+      <input id="sp" type="number" placeholder="قیمت (هزار تومان، اختیاری)">
+      <textarea id="sd" rows="3" placeholder="توضیحات / محتوای بخش"></textarea>
+      <button onclick="addSec()">افزودن بخش</button>
+    </div>
+    <div class="card">
+      <b>بخش‌های فعلی</b>
+      ${S.secs.map(s =>
+        `<div class="row" style="margin-top:10px">
+          <span class="row" style="justify-content:flex-start;color:var(--pri)">
+            ${sic(s.i, 20)}
+            <span style="color:var(--tx)">${esc(s.t)}</span>
+            <span class="mut">(${s.type == 'order' ? 'سفارش' : 'اطلاع'})</span>
+          </span>
+          <button class="r" onclick="S.secs=S.secs.filter(x=>x.id!=${s.id});save();draw()">حذف</button>
+        </div>`
+      ).join('') || '<span class="mut">خالی</span>'}
+    </div>
+    <div class="card">
+      <b>${ic('steth', 18)} افزودن پزشک</b>
+      <input id="dn" placeholder="نام پزشک">
+      <input id="ds" placeholder="تخصص">
+      <input id="df" type="number" placeholder="هزینه ویزیت (هزار تومان)">
+      <button onclick="addDoc()">افزودن</button>
+      ${S.docs.map((d, i) =>
+        `<div class="row" style="margin-top:10px">
+          <span>${esc(d[0])} · <span class="mut">${esc(d[1])}</span></span>
+          <button class="r" onclick="S.docs.splice(${i},1);save();draw()">حذف</button>
+        </div>`
+      ).join('')}
+    </div>
+    <div class="card">
+      <b>${ic('list', 18)} آخرین سفارش‌ها</b>
+      ${S.orders.slice(-8).reverse().map(o =>
+        `<div class="mut" style="margin-top:4px">${esc(o.t)} — ${esc(o.when)} — ${esc(o.note)}</div>`
+      ).join('') || '<div class="mut">سفارشی نیست</div>'}
+    </div>
+    <div class="card">
+      <b>${ic('key', 18)} تغییر رمز مدیر</b>
+      <input id="np" placeholder="رمز جدید">
+      <button onclick="if(np.value){S.pin=np.value;save();alert('رمز تغییر کرد')}">ذخیره</button>
+    </div>`;
+}
+
+function addSec() {
+  const t = st.value.trim();
+  if (!t) return;
+  S.secs.push({
+    id: Date.now(),
+    t,
+    i: si.value.trim() || 'flask',
+    type: sy.value,
+    desc: sd.value,
+    price: +sp.value || 0
+  });
+  save();
+  draw();
+}
+
+function addDoc() {
+  const a = dn.value.trim();
+  const b = ds.value.trim();
+  if (!a || !b) return;
+  S.docs.push([a, b, +df.value || 300]);
+  save();
+  draw();
+}
+
+
+/* ===== Server layer (Supabase) ===== */
+const SB='https://qyakaswkjpnwituqjfjf.supabase.co',KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF5YWthc3dranBud2l0dXFqZmpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI2NzE4MjYsImV4cCI6MjEwODI0NzgyNn0.yRBq1sudfo3y1mOoenAJo28EZ6JZaDyEld8FyDLnVlA';
+let TOK=null,ST={users:0,bk:0,orders:0,last:[]};
+try{TOK=localStorage.getItem('medura_tok')}catch(e){}
+const ERR={bad_login:'شماره یا رمز اشتباه است',exists:'این شماره قبلاً ثبت‌نام کرده است',bad_input:'شماره باید با 09 شروع شود و رمز حداقل ۶ کاراکتر باشد',no_coins:'موجودی سکه کافی نیست',forbidden:'دسترسی ندارید',bad_nid:'کد ملی معتبر نیست',bad_birth:'تاریخ تولد معتبر نیست',bad_name:'نام و نام خانوادگی را کامل وارد کنید',nid_used:'این کد ملی قبلاً ثبت شده است',not_verified:'ابتدا احراز هویت خود را تکمیل کنید',nobooking:'نوبت یافت نشد',reviewed:'برای این نوبت قبلاً نظر ثبت کرده‌اید',nodoc:'پزشک یافت نشد'};
+const fail=e=>{alert(e instanceof TypeError?'اتصال به سرور برقرار نشد':(e.message||'خطای ناشناخته'));if(e&&e.code==='not_verified'){S.tab='kyc';draw()}};
+const lat=v=>String(v).replace(/[۰-۹٠-٩０-９]/g,c=>{const x=c.charCodeAt(0);return x>=0xFF10?x-0xFF10:x>=0x6F0?x-0x6F0:x-0x660}).replace(/[\s‌‎‏]/g,'');
+async function rpc(fn,a={}){
+  const r=await fetch(SB+'/rest/v1/rpc/'+fn,{method:'POST',headers:{apikey:KEY,Authorization:'Bearer '+KEY,'Content-Type':'application/json'},body:JSON.stringify(a)});
+  const j=await r.json().catch(()=>null);
+  if(!r.ok){const c=(j&&j.message)||'';if(c==='unauth'){logout();throw new Error('نشست منقضی شد؛ دوباره وارد شوید')}{const e=new Error(ERR[c]||'خطای سرور');e.code=c;throw e}}
+  return j;
+}
+function setTok(t){TOK=t;try{localStorage.setItem('medura_tok',t)}catch(e){}}
+function logout(){TOK=null;try{localStorage.removeItem('medura_tok')}catch(e){}S.tab='home';draw()}
+async function sync(){
+  const [c,me]=await Promise.all([rpc('m_catalog'),rpc('m_me',{p_token:TOK})]);
+  CFG=c.cfg||CFG;if(c.tiers&&Object.keys(c.tiers).length){Object.keys(TIERS).forEach(k=>delete TIERS[k]);Object.assign(TIERS,c.tiers);if(!TIERS[S.pt])S.pt=Object.keys(TIERS)[0]}OFFER_PCT=+CFG.offer_pct||10;OFFER_DAYS=+CFG.offer_days||5;S.secs=c.secs;S.docs=c.docs;S.coins=me.coins;S.tier=me.tier;S.exp=me.exp;S.first=me.first;S.second=me.second;S.admin=me.admin;S.phone=me.phone;S.verified=me.verified;S.fn=me.fn;S.ln=me.ln;S.role=me.role;S.invite=me.invite;S.invited=me.invited;S.doc=me.doc;
+  S.bk=me.bk;S.orders=me.orders.map(o=>({...o,when:new Date(o.when).toLocaleDateString('fa-IR')}));
+  save();draw();
+}
+function authScreen(){
+  n.style.display='none';
+  m.innerHTML=hdr()+`<div class="card"><h3 style="margin-top:0">ورود یا ثبت‌نام</h3>
+  <input id="ph" inputmode="numeric" placeholder="شماره موبایل (09...)" dir="ltr">
+  <input id="pw" type="password" placeholder="رمز عبور (حداقل ۶ کاراکتر)" dir="ltr">
+  <div class="row" style="margin-top:12px"><button style="flex:1" onclick="auth('m_login')">ورود</button><button class="g" style="flex:1" onclick="auth('m_signup')">ثبت‌نام</button></div></div>`;
+}
+async function auth(fn){try{const r=await rpc(fn,{p_phone:lat(ph.value),p_pass:pw.value});setTok(r.token);await sync()}catch(e){fail(e)}}
+const _draw=draw;
+draw=function(){if(!TOK){authScreen();return}n.style.display='';_draw()};
+const _acc=acc;
+acc=function(){return _acc()+`<button class="g" style="width:100%;margin-top:10px" onclick="logout()">${ic('out',19)} خروج از حساب ${esc(S.phone||'')}</button>`};
+order=async function(id){try{await rpc('m_order',{p_token:TOK,p_sid:id,p_note:document.getElementById('note'+id).value});await sync();alert('سفارش شما ثبت شد.')}catch(e){fail(e)}};
+book=async function(i){
+  const d=S.docs[i],k=document.getElementById('k'+i).value,w=document.getElementById('w'+i).value;
+  try{const r=await rpc('m_book',{p_token:TOK,p_doc:d[3],p_kind:k,p_when:w});await sync();
+    alert(r.first?`نوبت ثبت شد. ${fa(OFFER_PCT)}٪ تخفیف ویزیت بعدی تا ${fa(OFFER_DAYS)} روز آینده فعال است`:'نوبت شما ثبت شد.')}catch(e){fail(e)}
+};
+async function cancelBk(id){try{await rpc('m_cancel',{p_token:TOK,p_id:id});await sync()}catch(e){fail(e)}}
+sub=async function(i){try{await rpc('m_subscribe',{p_token:TOK,p_tier:S.pt,p_idx:i});await sync();alert('اشتراک فعال شد')}catch(e){fail(e)}};
+async function admRefresh(){ST=await rpc('m_adm_stats',{p_token:TOK});await sync()}
+openAdmin=async function(){if(!S.admin){alert('فقط مدیر به این بخش دسترسی دارد.');return}try{ST=await rpc('m_adm_stats',{p_token:TOK});S.tab='adm';draw()}catch(e){fail(e)}};
+addSec=async function(){const t=st.value.trim();if(!t)return;try{await rpc('m_adm_sec_add',{p_token:TOK,p_t:t,p_i:si.value.trim()||'flask',p_type:sy.value,p_d:sd.value,p_price:+sp.value||0});await admRefresh()}catch(e){fail(e)}};
+addDoc=async function(){const a=dn.value.trim(),b=ds.value.trim();if(!a||!b)return;try{await rpc('m_adm_doc_add',{p_token:TOK,p_n:a,p_s:b,p_f:+df.value||300});await admRefresh()}catch(e){fail(e)}};
+async function admDel(fn,id){try{await rpc(fn,{p_token:TOK,p_id:id});await admRefresh()}catch(e){fail(e)}}
+adm=function(){return `
+  <div class="row"><h3>${ic('gear',20)} پنل مدیریت</h3><button class="g" onclick="go('acc')">${ic('out',16)} خروج</button></div>
+  <div class="card"><b>${ic('chart',18)} آمار</b><div class="mut" style="margin-top:6px">کاربران: ${fa(ST.users)} · نوبت‌ها: ${fa(ST.bk)} · سفارش‌ها: ${fa(ST.orders)} · پزشکان: ${fa(S.docs.length)} · بخش‌ها: ${fa(S.secs.length)}</div></div>
+  <div class="card"><b>${ic('plus',18)} افزودن بخش جدید به برنامه</b>
+    <input id="st" placeholder="نام بخش (مثلاً سفارش آزمایش)">
+    <input id="si" placeholder="آیکون: flask، pill، steth، heart، gift، shield، cal یا ایموجی" value="flask">
+    <select id="sy"><option value="order">سفارش‌پذیر (کاربر می‌تواند سفارش دهد)</option><option value="info">اطلاع‌رسانی (فقط نمایش محتوا)</option></select>
+    <input id="sp" type="number" placeholder="قیمت (هزار تومان، اختیاری)">
+    <textarea id="sd" rows="3" placeholder="توضیحات / محتوای بخش"></textarea>
+    <button onclick="addSec()">افزودن بخش</button></div>
+  <div class="card"><b>بخش‌های فعلی</b>${S.secs.map(s=>`<div class="row" style="margin-top:10px"><span class="row" style="justify-content:flex-start;color:var(--pri)">${sic(s.i,20)}<span style="color:var(--tx)">${esc(s.t)}</span><span class="mut">(${s.type=='order'?'سفارش':'اطلاع'})</span></span><button class="r" onclick="admDel('m_adm_sec_del',${s.id})">حذف</button></div>`).join('')||'<span class="mut">خالی</span>'}</div>
+  <div class="card"><b>${ic('steth',18)} افزودن پزشک</b>
+    <input id="dn" placeholder="نام پزشک"><input id="ds" placeholder="تخصص"><input id="df" type="number" placeholder="هزینه ویزیت (هزار تومان)">
+    <button onclick="addDoc()">افزودن</button>
+    ${S.docs.map(d=>`<div class="row" style="margin-top:10px"><span>${esc(d[0])} · <span class="mut">${esc(d[1])}</span></span><button class="r" onclick="admDel('m_adm_doc_del',${d[3]})">حذف</button></div>`).join('')}</div>
+  <div class="card"><b>${ic('list',18)} آخرین سفارش‌ها</b>${(ST.last||[]).map(o=>`<div class="mut" style="margin-top:4px">${esc(o.t)} — ${esc(o.phone)} — ${esc(o.note||'')}</div>`).join('')||'<div class="mut">سفارشی نیست</div>'}</div>`};
+
+/* ===== KYC, reviews, photos, hidden admin ===== */
+let CFG={offer_pct:10,offer_days:5,notice:''},AM='login',AD={},PH=null,RV={b:0,d:0,r:5},TAPS=0,TT=0;
+Object.assign(P,{lock:'<rect x="4" y="11" width="16" height="10" rx="3"/><path d="M8 11V8a4 4 0 018 0v3"/>',phone:'<rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/>',id:'<rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="11" r="2"/><path d="M6 16c.5-1.5 5.5-1.5 6 0M15 10h3M15 14h3"/>',star:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',img:'<rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/>',users:'<circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-4 3-6 7-6s7 2 7 6M17 5a3.5 3.5 0 010 7M22 20c0-3-1.5-5-4-5.7"/>',sliders:'<path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/>'});
+const star=(on,s=16)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="${on?'#f5a623':'none'}" stroke="#f5a623" stroke-width="1.6" stroke-linejoin="round">${P.star}</svg>`;
+const stars=a=>[1,2,3,4,5].map(k=>star(k<=Math.round(a||0))).join('');
+const docAv=(d,i)=>d[4]?`<img src="${esc(d[4])}" alt="">`:avatar(i);
+const rate=d=>`<div class="rt" onclick="showRev(${d[3]})">${stars(d[5])}<span class="mut">&nbsp;${d[6]?fa(d[5])+' ('+fa(d[6])+' نظر)':'بدون نظر'}</span></div>`;
+const bkBtns=b=>`<div style="display:flex;gap:6px">${b.reviewed?'<span class="badge">نظر ثبت شد</span>':`<button class="g" style="padding:8px 12px" onclick="reviewBk(${b.id},${b.did})">${ic('star',16)} نظر</button>`}<button class="r" onclick="cancelBk(${b.id})">لغو</button></div>`;
+function nidOk(c){if(!/^\d{10}$/.test(c)||/^(\d)\1{9}$/.test(c))return false;let s=0;for(let i=0;i<9;i++)s+=+c[i]*(10-i);const r=s%11,k=+c[9];return r<2?k==r:k==11-r}
+function needKyc(){alert('برای استفاده از این بخش ابتدا احراز هویت را تکمیل کنید.');S.tab='kyc';draw()}
+const kycB=()=>S.verified?'':`<div class="offer" style="background:linear-gradient(135deg,#fff4e0,#ffe2b8);color:#8a4b00;border-color:#ffd493;cursor:pointer" onclick="go('kyc')"><div class="tile" style="width:44px;height:44px;margin:0;flex:none;background:linear-gradient(135deg,#ffb347,#e67e00)">${ic('id',22)}</div><div><b>احراز هویت را تکمیل کنید</b><div style="font-size:13px">برای رزرو نوبت و استفاده از امکانات لازم است</div></div></div>`;
+const _home=home;home=function(){return _home().replace('<div class="grid">',kycB()+'<div class="grid">')};
+const _visit=visit;visit=function(){return kycB()+_visit()};
+const _acc2=acc;acc=function(){let h=_acc2().replace(/<button class="g"[^>]*onclick="openAdmin\(\)">[\s\S]*?<\/button>/,'');if(S.admin)h=h.replace('<button class="g" style="width:100%;margin-top:10px" onclick="logout()">',`<button style="width:100%;margin-top:10px" onclick="openAdmin()">${ic('gear',19)} پنل مدیریت</button><button class="g" style="width:100%;margin-top:10px" onclick="logout()">`);return h};
+[['order',a=>order=a],['book',a=>book=a],['sub',a=>sub=a],['buyCoins',a=>buyCoins=a]].forEach(([k,set])=>{const f=eval(k);set(function(x){if(!S.verified)return needKyc();return f(x)})});
+authScreen=function(){
+ n.style.display='none';const L=AM=='login';
+ m.innerHTML=`<div class="auth-h"><div class="auth-logo">${LOGO}</div><h1>مدیورا</h1><p>پزشک، دارو و ویزیت آنلاین؛ همه در یک برنامه</p></div>
+ <div class="card auth-c"><div class="seg"><button class="${L?'on':''}" onclick="AM='login';draw()">ورود</button><button class="${L?'':'on'}" onclick="AM='signup';draw()">ثبت‌نام</button></div>
+ <div class="fld">${ic('phone',20)}<input id="ph" inputmode="numeric" placeholder="شماره موبایل (مثلاً ۰۹۱۲۳۴۵۶۷۸۹)" dir="ltr" autocomplete="tel"></div>
+ <div class="fld">${ic('lock',20)}<input id="pw" type="password" placeholder="رمز عبور" dir="ltr" autocomplete="${L?'current-password':'new-password'}"></div>
+ ${L?'':`<div class="fld">${ic('lock',20)}<input id="pw2" type="password" placeholder="تکرار رمز عبور" dir="ltr"></div><div class="mut" style="margin:4px 4px 8px">رمز حداقل ۶ کاراکتر باشد. بعد از ثبت‌نام، احراز هویت را تکمیل می‌کنید.</div>`}
+ <button style="width:100%;margin-top:10px;padding:13px" onclick="auth('${L?'m_login':'m_signup'}')">${L?'ورود به حساب':'ساخت حساب'}</button></div>
+ <div class="feat"><span>${ic('shield',22)}پزشکان تأییدشده</span><span>${ic('cal',22)}رزرو آنلاین</span><span>${ic('gift',22)}تخفیف ویژه</span></div>`};
+auth=async function(fn){
+ if(fn=='m_signup'&&pw.value!==pw2.value){alert('رمز و تکرار آن یکسان نیست');return}
+ try{const r=await rpc(fn,{p_phone:lat(ph.value),p_pass:pw.value});setTok(r.token);S.tab=fn=='m_signup'?'kyc':'home';await sync()}catch(e){fail(e)}};
+const MON=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+function kyc(){
+ if(S.verified)return `<div class="card ok"><div class="okc">${ic('check',44)}</div><h2 style="margin:0 0 6px">احراز هویت شما تکمیل شد</h2><p class="mut">${esc(S.fn||'')} ${esc(S.ln||'')} عزیز، اکنون می‌توانید از تمام امکانات مدیورا استفاده کنید.</p><button style="width:100%" onclick="go('visit')">${ic('cal',18)} گرفتن نوبت</button></div>`;
+ const yr=[];for(let y=1404;y>=1310;y--)yr.push(y);
+ return `<h3>${ic('id',20)}احراز هویت</h3><div class="card"><p class="mut" style="margin-top:0">برای ثبت نوبت و استفاده از تمام امکانات، اطلاعات هویتی خود را وارد کنید.</p>
+ <div class="row"><input id="kf" placeholder="نام"><input id="kl" placeholder="نام خانوادگی"></div>
+ <div class="fld">${ic('id',20)}<input id="kn" inputmode="numeric" maxlength="10" placeholder="کد ملی (۱۰ رقم)" dir="ltr"></div>
+ <div class="mut" style="margin:8px 4px 2px">تاریخ تولد (شمسی)</div>
+ <div class="row"><select id="bd">${Array.from({length:31},(_,i)=>`<option value="${String(i+1).padStart(2,'0')}">${fa(i+1)}</option>`).join('')}</select><select id="bm">${MON.map((x,i)=>`<option value="${String(i+1).padStart(2,'0')}">${x}</option>`).join('')}</select><select id="by">${yr.map(y=>`<option ${y==1375?'selected':''} value="${y}">${fa(y).replace(/٬/g,'')}</option>`).join('')}</select></div>
+ <button style="width:100%;margin-top:12px;padding:13px" onclick="doKyc()">${ic('shield',18)} تأیید و تکمیل احراز هویت</button>
+ <div class="mut" style="margin-top:10px">اطلاعات شما محرمانه نگهداری می‌شود.</div></div>`}
+async function doKyc(){const nid=lat(kn.value);if(!/^\d{10}$/.test(nid)){alert('کد ملی باید دقیقاً ۱۰ رقم باشد');return}if(!nidOk(nid)){alert('این کد ملی معتبر نیست؛ ارقام را دوباره بررسی کنید');return}
+ try{await rpc('m_verify',{p_token:TOK,p_fn:kf.value,p_ln:kl.value,p_nid:nid,p_birth:`${by.value}/${bm.value}/${bd.value}`});await sync()}catch(e){fail(e)}}
+function modal(h){closeM();document.body.insertAdjacentHTML('beforeend',`<div id="md" class="md" onclick="if(event.target==this)closeM()"><div class="sheet">${h}</div></div>`)}
+function closeM(){const e=document.getElementById('md');if(e)e.remove()}
+async function showRev(id){try{const r=await rpc('m_reviews',{p_doc:id}),d=S.docs.find(x=>x[3]==id);
+ modal(`<div class="row"><b>نظرات درباره ${esc(d?d[0]:'')}</b><button class="g" style="padding:6px 12px" onclick="closeM()">بستن</button></div>`+(r.map(x=>`<div class="card" style="margin:10px 0 0"><div class="row"><b>${esc(x.who)}</b><span>${stars(x.rating)}</span></div><div style="margin-top:6px;line-height:1.8">${esc(x.body||'')}</div></div>`).join('')||'<p class="mut">هنوز نظری ثبت نشده است.</p>'))}catch(e){fail(e)}}
+function reviewBk(b,d){RV={b,d,r:5};modal(`<b>نظر شما درباره این پزشک</b><div id="rs" class="rstars"></div><textarea id="rt" rows="4" placeholder="تجربه خود را بنویسید (اختیاری)"></textarea><button style="width:100%;margin-top:10px" onclick="sendRev()">ثبت نظر</button>`);setR(5)}
+function setR(k){RV.r=k;document.getElementById('rs').innerHTML=[1,2,3,4,5].map(i=>`<span onclick="setR(${i})">${star(i<=k,36)}</span>`).join('')}
+async function sendRev(){try{await rpc('m_review',{p_token:TOK,p_booking:RV.b,p_rating:RV.r,p_body:document.getElementById('rt').value});closeM();await sync();alert('نظر شما ثبت شد. سپاسگزاریم!')}catch(e){fail(e)}}
+/* hidden admin: tap the logo 5 times (admins only) */
+function logoTap(){const t=Date.now();TAPS=t-TT<1500?TAPS+1:1;TT=t;if(TAPS>=6){TAPS=0;adminPass()}}
+async function adminPass(){if(!TOK){alert('ابتدا وارد حساب خود شوید.');return}const pw=prompt('رمز پنل مدیریت:');if(pw===null)return;try{await rpc('m_adm_pass',{p_token:TOK,p_pass:pw.trim()});S.admin=true;S.tab='adm';S.at='stats';await admLoad();draw()}catch(e){const m=String((e&&e.message)||e);alert(m.includes('too_many')?'تعداد تلاش زیاد است؛ ۱۰ دقیقه دیگر دوباره امتحان کنید.':m.includes('bad_pass')?'رمز اشتباه است':'خطا: '+m)}}
+openAdmin=async function(){if(!S.admin)return;S.tab='adm';S.at=S.at||'stats';await admLoad();draw()};
+async function admLoad(){const t=S.at,tk={p_token:TOK};try{if(t=='stats')AD.stats=await rpc('m_adm_stats',tk);if(t=='users')AD.users=await rpc('m_adm_users',tk);if(t=='bks')AD.bks=await rpc('m_adm_bookings',tk);if(t=='revs')AD.revs=await rpc('m_adm_reviews',tk)}catch(e){fail(e)}}
+async function admGo(t){S.at=t;await admLoad();draw()}
+async function admCall(fn,a){try{await rpc(fn,{p_token:TOK,...a});await sync();await admLoad();draw()}catch(e){fail(e)}}
+admDel=(fn,id)=>admCall(fn,{p_id:id});
+function readImg(f){return new Promise((ok,no)=>{const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas');c.width=c.height=240;const x=c.getContext('2d'),s=Math.min(im.width,im.height);x.drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,240,240);ok(c.toDataURL('image/jpeg',.8))};im.onerror=no;im.src=fr.result};fr.onerror=no;fr.readAsDataURL(f)})}
+async function pickNew(inp){if(inp.files[0]){try{PH=await readImg(inp.files[0]);const v=document.getElementById('pv');v.src=PH;v.style.display='block'}catch(e){alert('تصویر خوانده نشد')}}}
+async function docPhoto(id,inp){if(inp.files[0]){try{admCall('m_adm_doc_upd',{p_id:id,p_fee:null,p_photo:await readImg(inp.files[0])})}catch(e){alert('تصویر خوانده نشد')}}}
+function docFee(id){const v=prompt('هزینه جدید ویزیت (هزار تومان)');if(v&&+v>0)admCall('m_adm_doc_upd',{p_id:id,p_fee:+v,p_photo:null})}
+function userCoins(id){const v=prompt('تعداد سکه برای افزودن (برای کم کردن عدد منفی)');if(v&&+v)admCall('m_adm_user_coins',{p_uid:id,p_delta:Math.trunc(+v)})}
+addSec=function(){const t=st.value.trim();if(!t)return;admCall('m_adm_sec_add',{p_t:t,p_i:si.value.trim()||'flask',p_type:sy.value,p_d:sd.value,p_price:+sp.value||0})};
+addDoc=function(){const a=dn.value.trim(),b=ds.value.trim();if(!a||!b)return;const p=PH;PH=null;admCall('m_adm_doc_add',{p_n:a,p_s:b,p_f:+df.value||300,p_photo:p})};
+function saveCfg(){admCall('m_adm_cfg',{p_pct:+cp.value||0,p_days:+cd.value||5,p_notice:cn.value})}
+adm=function(){
+ const T=[['stats','chart','آمار'],['users','users','کاربران'],['docs','steth','پزشکان'],['secs','grid','بخش‌ها'],['bks','cal','نوبت‌ها'],['pend','steth','تأیید پزشکان'],['hv','home','ویزیت منزل'],['tiers','star','اشتراک‌ها'],['revs','star','نظرات'],['cfg','sliders','تنظیمات']],t=S.at||'stats';let b='';
+ if(t=='stats'){const a=AD.stats||{};b=`<div class="grid" style="grid-template-columns:repeat(2,1fr)">${[['کاربران',a.users],['احراز‌شده',a.ver],['نوبت‌ها',a.bk],['سفارش‌ها',a.orders],['نظرات',a.rev],['مجموع ویزیت‌ها (هزار تومان)',a.income],['کارمزد مدیورا (هزار تومان)',a.comm],['پزشکان در انتظار تأیید',a.pend]].map(x=>`<div class="card" style="margin:0"><div class="mut">${x[0]}</div><b style="font-size:22px">${fa(x[1]||0)}</b></div>`).join('')}</div>`}
+ if(t=='users')b=(AD.users||[]).map(u=>`<div class="card row"><div><b>${esc((u.fn||'')+' '+(u.ln||''))||'—'}</b> ${u.verified?'<span class="badge">احراز‌شده</span>':''}<div class="mut" dir="ltr" style="text-align:right">${esc(u.phone)} · ${fa(u.coins)} سکه</div></div><button style="padding:8px 12px" onclick="userCoins('${u.id}')">${ic('coin',16)} سکه</button></div>`).join('')||'<div class="card mut">کاربری نیست</div>';
+ if(t=='docs')b=`<div class="card"><b>${ic('plus',18)} افزودن پزشک</b><input id="dn" placeholder="نام پزشک"><input id="ds" placeholder="تخصص"><input id="df" type="number" placeholder="هزینه ویزیت (هزار تومان)">
+  <label class="mut" style="display:block;margin:6px 0">${ic('img',16)} عکس پزشک</label><input type="file" accept="image/*" onchange="pickNew(this)"><img id="pv" class="pv" alt=""><button style="width:100%;margin-top:8px" onclick="addDoc()">افزودن پزشک</button></div>`+S.docs.map((d,i)=>`<div class="card"><div class="doc">${docAv(d,i)}<div><b>${esc(d[0])}</b><div class="mut">${esc(d[1])} · ${fa(d[2])} هزار تومان</div></div></div>
+  <div class="row" style="margin-top:10px"><label class="g" style="flex:1;text-align:center;border:1.5px solid var(--pri);border-radius:14px;padding:9px;color:var(--pri);cursor:pointer">${ic('img',16)} عکس<input type="file" accept="image/*" hidden onchange="docPhoto(${d[3]},this)"></label><button class="g" style="flex:1" onclick="docFee(${d[3]})">هزینه</button><button class="r" onclick="if(confirm('حذف شود؟'))admDel('m_adm_doc_del',${d[3]})">حذف</button></div></div>`).join('');
+ if(t=='secs')b=`<div class="card"><b>${ic('plus',18)} افزودن بخش جدید</b><input id="st" placeholder="نام بخش"><input id="si" placeholder="آیکون: flask، pill، steth، heart، gift، shield، cal یا ایموجی" value="flask"><select id="sy"><option value="order">سفارش‌پذیر</option><option value="info">اطلاع‌رسانی</option></select><input id="sp" type="number" placeholder="قیمت (هزار تومان، اختیاری)"><textarea id="sd" rows="3" placeholder="توضیحات / محتوا"></textarea><button onclick="addSec()">افزودن</button></div>`+S.secs.map(s=>`<div class="card row"><span class="row" style="justify-content:flex-start;color:var(--pri)">${sic(s.i,20)}<span style="color:var(--tx)">${esc(s.t)}</span></span><button class="r" onclick="admDel('m_adm_sec_del',${s.id})">حذف</button></div>`).join('');
+ if(t=='bks')b=(AD.bks||[]).map(x=>`<div class="card row"><div><b>${esc(x.doc)}</b><div class="mut">${esc(x.who)} · ${esc(x.when)} · ${esc(x.kind)} · ${fa(x.price)} · کارمزد ${fa(x.comm||0)}</div></div><button class="r" onclick="admDel('m_adm_booking_del',${x.id})">حذف</button></div>`).join('')||'<div class="card mut">نوبتی نیست</div>';
+ if(t=='pend')b=pendHtml();
+ if(t=='hv')b=hvHtml();
+ if(t=='tiers')b=tiersHtml();
+ if(t=='revs')b=(AD.revs||[]).map(x=>`<div class="card"><div class="row"><b>${esc(x.doc||'—')}</b><span>${stars(x.rating)}</span></div><div class="mut">${esc(x.who)}</div><div style="margin:6px 0">${esc(x.body||'')}</div><button class="r" onclick="admDel('m_adm_review_del',${x.id})">حذف نظر</button></div>`).join('')||'<div class="card mut">نظری نیست</div>';
+ if(t=='cfg')b=`<div class="card"><b>تخفیف ویزیت دوم</b><input id="cp" type="number" value="${OFFER_PCT}" placeholder="درصد تخفیف"><input id="cd" type="number" value="${OFFER_DAYS}" placeholder="مهلت (روز)"><b style="display:block;margin-top:8px">کارمزد ویزیت (درصد)</b><input id="cc" type="number" min="0" max="50" value="${+CFG.commission_pct||0}"><b style="display:block;margin-top:8px">پاداش دعوت (سکه برای هر نفر)</b><input id="ib" type="number" min="0" value="${+CFG.invite_bonus||0}"><b style="display:block;margin-top:8px">هزینه ویزیت در منزل (هزار تومان؛ خالی یا ۰ = «به‌زودی اعلام می‌شود»)</b><input id="hvp" type="number" min="0" value="${+CFG.homevisit_price||''}"><b style="display:block;margin-top:8px">اعلان همگانی (با زنگ بالای صفحه)</b><textarea id="cn" rows="3" placeholder="متن اعلان">${esc(CFG.notice||'')}</textarea><button style="width:100%;margin-top:8px" onclick="saveCfg()">ذخیره تنظیمات</button></div>`;
+ return `<div class="row"><h3>${ic('gear',20)} پنل مدیریت</h3><button class="g" onclick="go('acc')">${ic('out',16)} خروج</button></div><div class="chips at">${T.map(x=>`<button class="${t==x[0]?'on':''}" onclick="admGo('${x[0]}')">${ic(x[1],16)} ${x[2]}</button>`).join('')}</div>${b}`};
+/* ===== v5: doctors, invite code, commission, typed birth date ===== */
+Object.assign(ERR,{bad_invite:'کد دعوت معتبر نیست',doc_age:'برای ثبت‌نام پزشک باید حداقل ۲۴ سال سن داشته باشید',doc_exists:'قبلاً اطلاعات پزشکی ثبت کرده‌اید',bad_license:'شماره نظام پزشکی باید فقط عدد (۳ تا ۱۰ رقم) باشد',big_photo:'حجم عکس زیاد است',too_many:'امروز تعداد مجاز نوشته را ثبت کرده‌اید؛ فردا دوباره امتحان کنید',self_book:'نمی‌توانید از خودتان نوبت بگیرید'});
+let AR='patient',AKEEP={},DP=[],PH2=null;
+const jyNow=()=>{try{const y=parseInt(new Date().toLocaleDateString('en-US-u-ca-persian-nu-latn',{year:'numeric'}),10);if(y>1300&&y<1700)return y}catch(e){}return new Date().getFullYear()-621};
+const jLeap=y=>[1,5,9,13,17,22,26,30].includes(y%33);
+function birthParse(v){
+ const s=lat(v).replace(/[-.\\\/،,]+/g,'/'),p=s.split('/');
+ if(p.length!=3||p.some(x=>!/^\d+$/.test(x)))return null;
+ const y=+p[0],m=+p[1],d=+p[2];
+ if(p[0].length!=4||y<1300||y>jyNow()||m<1||m>12||d<1)return null;
+ const mx=m<=6?31:m<=11?30:(jLeap(y)?30:29);
+ if(d>mx)return null;
+ return `${y}/${String(m).padStart(2,'0')}/${String(d).padStart(2,'0')}`;
+}
+const keepAuth=()=>{['ph','pw','pw2','invc'].forEach(k=>{const e=document.getElementById(k);if(e)AKEEP[k]=e.value})};
+authScreen=function(){
+ n.style.display='none';const L=AM=='login';
+ m.innerHTML=`<div class="auth-h"><div class="auth-logo">${LOGO}</div><h1>مدیورا</h1><p>پزشک، دارو و ویزیت آنلاین؛ همه در یک برنامه</p></div>
+ <div class="card auth-c"><div class="seg"><button class="${L?'on':''}" onclick="keepAuth();AM='login';draw()">ورود</button><button class="${L?'':'on'}" onclick="keepAuth();AM='signup';draw()">ثبت‌نام</button></div>
+ ${L?'':`<div class="mut" style="margin:2px 4px 6px">ثبت‌نام به‌عنوان</div><div class="seg" style="margin-bottom:10px"><button class="${AR=='patient'?'on':''}" onclick="keepAuth();AR='patient';draw()">${ic('user',16)} بیمار</button><button class="${AR=='doctor'?'on':''}" onclick="keepAuth();AR='doctor';draw()">${ic('steth',16)} پزشک</button></div>`}
+ <div class="fld">${ic('phone',20)}<input id="ph" inputmode="numeric" placeholder="شماره موبایل (مثلاً ۰۹۱۲۳۴۵۶۷۸۹)" dir="ltr" autocomplete="tel"></div>
+ <div class="fld">${ic('lock',20)}<input id="pw" type="password" placeholder="رمز عبور" dir="ltr" autocomplete="${L?'current-password':'new-password'}"></div>
+ ${L?'':`<div class="fld">${ic('lock',20)}<input id="pw2" type="password" placeholder="تکرار رمز عبور" dir="ltr"></div>
+ <div class="fld">${ic('gift',20)}<input id="invc" placeholder="کد دعوت (اختیاری)" dir="ltr" autocapitalize="characters" maxlength="12"></div>
+ <div class="mut" style="margin:4px 4px 8px">رمز حداقل ۶ کاراکتر باشد. بعد از ثبت‌نام، احراز هویت را تکمیل می‌کنید.${AR=='doctor'?'<br>پزشکان پس از احراز هویت، اطلاعات حرفه‌ای خود را ثبت می‌کنند و بعد از تأیید مدیر در فهرست پزشکان قرار می‌گیرند.':''}</div>`}
+ <button style="width:100%;margin-top:10px;padding:13px" onclick="auth('${L?'m_login':'m_signup'}')">${L?'ورود به حساب':(AR=='doctor'?'ساخت حساب پزشک':'ساخت حساب')}</button></div>
+ <div class="feat"><span>${ic('shield',22)}پزشکان تأییدشده</span><span>${ic('cal',22)}رزرو آنلاین</span><span>${ic('gift',22)}تخفیف ویژه</span></div>`;
+ ['ph','pw','pw2','invc'].forEach(k=>{const e=document.getElementById(k);if(e&&AKEEP[k])e.value=AKEEP[k]});
+};
+auth=async function(fn){
+ if(fn=='m_signup'&&pw.value!==pw2.value){alert('رمز و تکرار آن یکسان نیست');return}
+ const a={p_phone:lat(ph.value),p_pass:pw.value};
+ if(fn=='m_signup'){a.p_role=AR;const iv=lat((document.getElementById('invc')||{}).value||'').toUpperCase();if(iv)a.p_invite=iv}
+ try{const r=await rpc(fn,a);AKEEP={};setTok(r.token);S.tab=fn=='m_signup'?'kyc':'home';await sync()}catch(e){fail(e)}};
+
+kyc=function(){
+ if(S.verified)return `<div class="card ok"><div class="okc">${ic('check',44)}</div><h2 style="margin:0 0 6px">احراز هویت شما تکمیل شد</h2><p class="mut">${esc(S.fn||'')} ${esc(S.ln||'')} عزیز، اکنون می‌توانید از تمام امکانات مدیورا استفاده کنید.</p>${S.role=='doctor'?`<button style="width:100%" onclick="openDP()">${ic('steth',18)} ${S.doc?'پنل پزشک':'ثبت اطلاعات پزشکی'}</button>`:`<button style="width:100%" onclick="go('visit')">${ic('cal',18)} گرفتن نوبت</button>`}</div>`;
+ return `<h3>${ic('id',20)}احراز هویت</h3><div class="card"><p class="mut" style="margin-top:0">برای ثبت نوبت و استفاده از تمام امکانات، اطلاعات هویتی خود را وارد کنید. تاریخ تولد باید دقیقاً همان تاریخ شناسنامه‌ی شما باشد.</p>
+ <div class="row"><input id="kf" placeholder="نام"><input id="kl" placeholder="نام خانوادگی"></div>
+ <div class="fld">${ic('id',20)}<input id="kn" inputmode="numeric" maxlength="10" placeholder="کد ملی (۱۰ رقم)" dir="ltr"></div>
+ <div class="fld">${ic('cal',20)}<input id="kb" inputmode="numeric" maxlength="10" placeholder="تاریخ تولد شمسی؛ مثلاً ۱۳۷۵/۰۳/۲۰" dir="ltr"></div>
+ <div class="mut" style="margin:4px 4px 0">به‌صورت سال/ماه/روز بنویسید (ارقام فارسی یا انگلیسی).${S.role=='doctor'?' سن پزشک حداقل ۲۴ سال.':''}</div>
+ <label class="chk"><input type="checkbox" id="kp"><span>تأیید می‌کنم شماره موبایل این حساب به نام <b>همین کد ملی</b> (خودم) ثبت شده است.</span></label>
+ <button style="width:100%;margin-top:12px;padding:13px" onclick="doKyc()">${ic('shield',18)} تأیید و تکمیل احراز هویت</button>
+ <div class="mut" style="margin-top:10px">اطلاعات شما محرمانه نگهداری می‌شود.</div></div>`};
+doKyc=async function(){
+ const nid=lat(kn.value);
+ if(!/^\d{10}$/.test(nid)){alert('کد ملی باید دقیقاً ۱۰ رقم باشد');return}
+ if(!nidOk(nid)){alert('این کد ملی معتبر نیست؛ ارقام را دوباره بررسی کنید');return}
+ const b=birthParse(kb.value);
+ if(!b){alert('تاریخ تولد معتبر نیست. مثال درست: ۱۳۷۵/۰۳/۲۰ (ماه ۱ تا ۱۲، روز طبق تعداد روزهای همان ماه)');return}
+ if(!kp.checked){alert('باید تأیید کنید که شماره موبایل به نام همین کد ملی ثبت شده است');return}
+ try{await rpc('m_verify',{p_token:TOK,p_fn:kf.value,p_ln:kl.value,p_nid:nid,p_birth:b,p_phone_ok:true});await sync();if(S.role=='doctor'){alert('احراز هویت انجام شد. حالا اطلاعات پزشکی خود را ثبت کنید.');openDP();return}}catch(e){fail(e)}};
+
+/* ---- account: invite code + doctor panel link ---- */
+const _acc3=acc;
+acc=function(){
+ const bonus=+CFG.invite_bonus||0;
+ let x=`<h3>${ic('gift',22)} دعوت دوستان</h3><div class="card"><div class="mut">کد دعوت شما</div>
+ <div class="row" style="margin-top:6px"><b dir="ltr" style="font-size:24px;letter-spacing:3px">${esc(S.invite||'—')}</b><button class="g" onclick="copyInv()">کپی</button></div>
+ <div class="mut" style="margin-top:8px">${bonus?`وقتی دوستتان با این کد ثبت‌نام کند و احراز هویتش کامل شود، هر دوی شما ${fa(bonus)} سکه می‌گیرید.`:'دوستانتان می‌توانند هنگام ثبت‌نام این کد را وارد کنند.'} دعوت‌های موفق: ${fa(S.invited||0)}</div></div>`;
+ if(S.role=='doctor')x=`<button style="width:100%;margin-top:10px" onclick="openDP()">${ic('steth',19)} پنل پزشک${S.doc&&S.doc.status=='pending'?' (در انتظار تأیید)':''}</button>`;
+ return _acc3()+x};
+function copyInv(){const t=S.invite||'';try{navigator.clipboard.writeText(t).then(()=>alert('کد کپی شد'),()=>prompt('کد را کپی کنید:',t))}catch(e){prompt('کد را کپی کنید:',t)}}
+
+/* ---- doctor panel ---- */
+async function openDP(){
+ if(!S.verified){needKyc();return}
+ S.tab='dpanel';DP=[];
+ if(S.doc&&S.doc.status=='approved'){try{DP=await rpc('m_doc_posts',{p_doc:S.doc.id})}catch(e){}}
+ draw();m.scrollTop=0}
+function docForm(d){
+ const sp=[...new Set(S.docs.map(x=>x[1]))];
+ return `<div class="card"><b>${ic('steth',18)} ${d?'ویرایش اطلاعات':'اطلاعات حرفه‌ای'}</b>
+ <input id="dsp" list="dsl" placeholder="تخصص (مثلاً قلب و عروق)" value="${esc(d?d.spec:'')}"><datalist id="dsl">${sp.map(x=>`<option value="${esc(x)}">`).join('')}</datalist>
+ <input id="dfe" type="number" inputmode="numeric" placeholder="هزینه ویزیت (هزار تومان)" value="${d?d.fee:''}">
+ ${d?`<div class="mut" style="margin:2px 4px">شماره نظام پزشکی: <span dir="ltr">${esc(d.license||'')}</span> (قابل تغییر نیست)</div>`:`<input id="dli" inputmode="numeric" placeholder="شماره نظام پزشکی" dir="ltr">`}
+ <input id="dye" type="number" inputmode="numeric" placeholder="سال‌های سابقه کار" value="${d&&d.years!=null?d.years:''}">
+ <input id="dad" placeholder="آدرس مطب / محل کار (اختیاری)" value="${esc(d?d.address||'':'')}">
+ <textarea id="dbi" rows="4" placeholder="درباره من؛ تحصیلات، تخصص‌ها، خدمات و ...">${esc(d?d.bio||'':'')}</textarea>
+ <label class="mut" style="display:block;margin:6px 0">${ic('img',16)} عکس پروفایل</label><input type="file" accept="image/*" onchange="pickDP(this)"><img id="pv2" class="pv" alt="" ${d&&d.photo?`src="${esc(d.photo)}" style="display:block"`:''}>
+ <button style="width:100%;margin-top:10px" onclick="${d?'saveDoc()':'applyDoc()'}">${d?'ذخیره':'ارسال برای تأیید مدیر'}</button></div>`}
+async function pickDP(inp){if(inp.files[0]){try{PH2=await readImg(inp.files[0]);const v=document.getElementById('pv2');v.src=PH2;v.style.display='block'}catch(e){alert('تصویر خوانده نشد')}}}
+const dnum=id=>{const v=lat(document.getElementById(id).value);return v===''?null:+v};
+async function applyDoc(){
+ const sp=dsp.value.trim(),fe=dnum('dfe'),li=lat(dli.value),ye=dnum('dye');
+ if(sp.length<2||!fe||fe<1){alert('تخصص و هزینه ویزیت را وارد کنید');return}
+ if(!/^\d{3,10}$/.test(li)){alert('شماره نظام پزشکی را فقط با عدد وارد کنید');return}
+ if(ye===null||ye<0||ye>60){alert('سابقه کار را بین ۰ تا ۶۰ سال وارد کنید');return}
+ try{await rpc('m_doc_apply',{p_token:TOK,p_spec:sp,p_fee:Math.trunc(fe),p_license:li,p_bio:dbi.value,p_years:Math.trunc(ye),p_address:dad.value,p_photo:PH2});PH2=null;await sync();alert('اطلاعات ثبت شد و بعد از تأیید مدیر در فهرست پزشکان نمایش داده می‌شود.');openDP()}catch(e){fail(e)}}
+async function saveDoc(){
+ const fe=dnum('dfe'),ye=dnum('dye');
+ if(!fe||fe<1){alert('هزینه ویزیت را وارد کنید');return}
+ try{await rpc('m_doc_update',{p_token:TOK,p_spec:dsp.value.trim(),p_fee:Math.trunc(fe),p_bio:dbi.value,p_years:ye===null?null:Math.trunc(ye),p_address:dad.value,p_photo:PH2});PH2=null;await sync();await openDP();alert('ذخیره شد')}catch(e){fail(e)}}
+async function addPost(){try{await rpc('m_doc_post',{p_token:TOK,p_title:ptl.value,p_body:pbd.value});await openDP()}catch(e){fail(e)}}
+async function delPost(id){if(!confirm('این نوشته حذف شود؟'))return;try{await rpc('m_doc_post_del',{p_token:TOK,p_id:id});await openDP()}catch(e){fail(e)}}
+const r1=x=>fa(Math.round((+x||0)*10)/10);
+function dpanel(){
+ if(!S.verified)return kyc();
+ if(S.role!='doctor')return `<div class="card mut">این بخش مخصوص حساب پزشکان است.</div>`;
+ const d=S.doc,pct=CFG.commission_pct!=null?+CFG.commission_pct:10;
+ if(!d)return `<h3>${ic('steth',20)} ثبت‌نام پزشک</h3><div class="card mut" style="margin-bottom:10px">اطلاعات حرفه‌ای خود را وارد کنید. بعد از بررسی و تأیید مدیر، نام شما در فهرست پزشکان نمایش داده می‌شود.</div>${docForm(null)}`;
+ const e=d.earn||{};
+ let h=`<h3>${ic('steth',20)} پنل پزشک</h3>
+ <div class="card row"><div class="row" style="justify-content:flex-start">${d.photo?`<img class="pv" style="display:block;width:54px;height:54px;border-radius:50%;margin:0" src="${esc(d.photo)}" alt="">`:`<div class="tile" style="margin:0;width:54px;height:54px;border-radius:50%">${ic('user',26)}</div>`}<div><b>${esc(d.name)}</b><div class="mut">${esc(d.spec)} · ${fa(d.fee)} هزار تومان</div></div></div>${d.status=='approved'?'<span class="badge">تأییدشده</span>':'<span class="badge" style="background:#fff4e0;color:#8a4b00">در انتظار تأیید</span>'}</div>`;
+ if(d.status!='approved')h+=`<div class="card mut">اطلاعات شما برای بررسی ارسال شده است. تا زمان تأیید مدیر، نام شما در فهرست پزشکان نمایش داده نمی‌شود. در این مدت می‌توانید اطلاعات خود را ویرایش کنید.</div>`;
+ else{
+  h+=`<div class="grid" style="grid-template-columns:repeat(2,1fr)">${[['تعداد ویزیت',e.n],['مجموع ویزیت‌ها (هزار تومان)',e.gross],['کارمزد مدیورا ('+fa(pct)+'٪)',e.comm],['سهم خالص شما (هزار تومان)',e.net]].map((x,i)=>`<div class="card" style="margin:0"><div class="mut">${x[0]}</div><b style="font-size:20px">${i?r1(x[1]):fa(x[1]||0)}</b></div>`).join('')}</div>
+  <div class="mut" style="margin:8px 4px">از هر ویزیت ${fa(pct)}٪ کارمزد مدیورا کسر می‌شود و بقیه سهم شماست.</div>
+  <button class="g" style="width:100%;margin-top:4px" onclick="withdrawSoon()">${ic('coin',18)} برداشت <span class="badge">به‌زودی فعال می‌شود</span></button>
+  <h3>${ic('list',20)} آخرین نوبت‌ها</h3>${(d.bk||[]).map(b=>`<div class="card"><div class="row"><b>${esc(b.who)}</b><span class="mut">${esc(b.kind)}</span></div><div class="mut">${esc(b.when)} · ${r1(b.price)} هزار تومان · سهم شما ${r1(b.net)}</div></div>`).join('')||'<div class="card mut">هنوز نوبتی ندارید.</div>'}
+  <h3>${ic('star',20)} نوشته‌های من</h3>
+  <div class="card"><input id="ptl" maxlength="100" placeholder="عنوان (مثلاً نکات مراقبت از پوست)"><textarea id="pbd" rows="4" maxlength="1500" placeholder="متن نوشته؛ نکته‌ی آموزشی، خدمات جدید، ساعات حضور ..."></textarea><button style="width:100%;margin-top:8px" onclick="addPost()">${ic('plus',16)} انتشار</button><div class="mut" style="margin-top:6px">روزی حداکثر ۵ نوشته. نوشته‌ها در صفحه‌ی اطلاعات شما برای بیماران دیده می‌شود. توصیه‌ی دارویی یا تشخیصی قطعی منتشر نکنید.</div></div>
+  ${DP.map(p=>`<div class="card"><div class="row"><b>${esc(p.title)}</b><button class="r" onclick="delPost(${p.id})">حذف</button></div><div style="margin-top:6px;line-height:1.9;white-space:pre-wrap">${esc(p.body)}</div></div>`).join('')}`;
+ }
+ return h+docForm(d)}
+
+/* ---- doctor info modal for patients ---- */
+async function docInfo(i){
+ const d=S.docs[i];let ps=[];
+ try{ps=await rpc('m_doc_posts',{p_doc:d[3]})}catch(e){}
+ modal(`<div class="row"><b>${esc(d[0])}</b><button class="g" style="padding:6px 12px" onclick="closeM()">بستن</button></div>
+ <div class="doc" style="margin-top:10px">${docAv(d,i)}<div><span class="badge">${esc(d[1])}</span><div class="mut" style="margin-top:6px">${d[7]!=null?`سابقه: ${fa(d[7])} سال`:''}</div>${d[9]?`<div class="mut">${esc(d[9])}</div>`:''}</div></div>
+ ${d[8]?`<div class="card" style="margin:10px 0 0;line-height:1.9;white-space:pre-wrap">${esc(d[8])}</div>`:''}
+ <h3 style="margin:14px 0 6px">نوشته‌ها</h3>${ps.map(p=>`<div class="card" style="margin:8px 0 0"><b>${esc(p.title)}</b><div class="mut" style="margin:2px 0 6px">${new Date(p.when).toLocaleDateString('fa-IR')}</div><div style="line-height:1.9;white-space:pre-wrap">${esc(p.body)}</div></div>`).join('')||'<p class="mut">هنوز نوشته‌ای منتشر نشده است.</p>'}`)}
+
+/* ---- admin additions ---- */
+const _admLoad=admLoad;
+admLoad=async function(){await _admLoad();if(S.at=='pend'){try{AD.pend=await rpc('m_adm_pending',{p_token:TOK})}catch(e){fail(e)}}if(S.at=='hv'){try{AD.hv=await rpc('m_adm_home_visits',{p_token:TOK})}catch(e){fail(e)}}};
+function pendHtml(){return (AD.pend||[]).map(x=>`<div class="card"><div class="doc">${x.photo?`<img src="${esc(x.photo)}" alt="">`:avatar(0)}<div><b>${esc(x.name)}</b><div class="mut">${esc(x.spec)} · ${fa(x.fee)} هزار تومان · سابقه ${fa(x.years||0)} سال</div></div></div>
+ <div class="mut" style="margin-top:8px;line-height:1.9">نظام پزشکی: <span dir="ltr">${esc(x.lic)}</span><br>موبایل: <span dir="ltr">${esc(x.phone)}</span> · کد ملی: <span dir="ltr">${esc(x.nid)}</span> · تولد: <span dir="ltr">${esc(x.birth)}</span>${x.address?`<br>آدرس: ${esc(x.address)}`:''}</div>
+ ${x.bio?`<div style="margin-top:6px;line-height:1.8;white-space:pre-wrap">${esc(x.bio)}</div>`:''}
+ <div class="row" style="margin-top:10px"><button style="flex:1" onclick="admCall('m_adm_doc_review',{p_id:${x.id},p_ok:true})">تأیید</button><button class="r" style="flex:1" onclick="if(confirm('درخواست رد و حذف شود؟'))admCall('m_adm_doc_review',{p_id:${x.id},p_ok:false})">رد</button></div></div>`).join('')||'<div class="card mut">درخواستی در انتظار نیست</div>'}
+saveCfg=async function(){
+ try{await rpc('m_adm_set',{p_token:TOK,p_k:'commission_pct',p_v:String(Math.trunc(+cc.value||0))});await rpc('m_adm_set',{p_token:TOK,p_k:'invite_bonus',p_v:String(Math.trunc(+ib.value||0))});await rpc('m_adm_set',{p_token:TOK,p_k:'homevisit_price',p_v:String(Math.trunc(+lat(hvp.value)||0))});
+ await rpc('m_adm_cfg',{p_token:TOK,p_pct:+cp.value||0,p_days:+cd.value||5,p_notice:cn.value});await sync();await admLoad();draw();alert('ذخیره شد')}catch(e){fail(e)}};
+
+/* ===== v6: editable subscriptions + AI drug info ===== */
+const dlabel=d=>d==7?'۷ روزه':d%30==0?fa(d/30)+' ماهه':fa(d)+' روزه';
+/* admin: subscriptions tab */
+function tiersHtml(){return Object.keys(TIERS).map(k=>{const t=TIERS[k];return `<div class="card"><div class="row"><b>${ti(k,22)} ${esc(t.n)}</b><span class="mut" dir="ltr">${k}</span></div>
+ <label class="mut" style="display:block;margin:8px 0 2px">نام اشتراک</label><input id="tn_${k}" value="${esc(t.n)}" maxlength="30">
+ <label class="mut" style="display:block;margin:8px 0 2px">درصد تخفیف ویزیت برای دارندگان این اشتراک</label><input id="td_${k}" type="number" min="0" max="90" value="${+t.disc||0}">
+ <label class="mut" style="display:block;margin:8px 0 2px">امکانات (هر خط یک مورد)</label><textarea id="tf_${k}" rows="4">${esc((t.f||[]).join('\n'))}</textarea>
+ <label class="mut" style="display:block;margin:8px 0 2px">بسته‌ها؛ هر خط: مدت (روز) | قیمت (هزار تومان) | قیمت به سکه</label><textarea id="tp_${k}" rows="6" dir="ltr" style="text-align:left">${esc((t.p||[]).map(r=>r.join(' | ')).join('\n'))}</textarea>
+ <div class="mut" style="margin:4px 2px">مثال: <span dir="ltr">30 | 80 | 40</span> یعنی اشتراک ۳۰ روزه، ۸۰ هزار تومان، ۴۰ سکه. ردیف حذف‌شده دیگر فروخته نمی‌شود.</div>
+ <button style="width:100%;margin-top:8px" onclick="saveTier('${k}')">ذخیره‌ی ${esc(t.n)}</button></div>`}).join('')}
+async function saveTier(k){
+ const name=document.getElementById('tn_'+k).value.trim(),disc=Math.trunc(+lat(document.getElementById('td_'+k).value));
+ const feats=document.getElementById('tf_'+k).value.split('\n').map(x=>x.trim()).filter(Boolean);
+ const rows=lat(document.getElementById('tp_'+k).value.replace(/٫/g,'.').replace(/\n/g,'¶')).split('¶').filter(x=>x.trim());
+ const plans=[];
+ for(const r of rows){const p=r.split(/[|,،]/).map(x=>x.trim());const d=+p[0],pr=+p[1],c=+p[2];
+  if(p.length!=3||!Number.isInteger(d)||d<1||!(pr>=0)||!Number.isInteger(c)||c<0){alert('ردیف نادرست: «'+r+'»\nشکل درست: مدت | قیمت | سکه (مثلاً 30 | 80 | 40)');return}
+  plans.push([d,pr,c])}
+ if(!plans.length){alert('حداقل یک بسته لازم است');return}
+ if(name.length<2){alert('نام اشتراک را وارد کنید');return}
+ if(!(disc>=0&&disc<=90)){alert('درصد تخفیف باید بین ۰ تا ۹۰ باشد');return}
+ try{await rpc('m_adm_tier_set',{p_token:TOK,p_tier:k,p_name:name,p_disc:disc,p_features:feats,p_plans:plans});await sync();await admLoad();draw();alert('ذخیره شد')}catch(e){fail(e)}}
+/* AI drug info */
+const DR={q:'',a:'',err:'',busy:false};
+const DERR={rate_limit:'سقف پرسش امروز شما تمام شده است؛ فردا دوباره امتحان کنید.',no_keys:'سرویس هوش مصنوعی فعلاً در دسترس نیست.',upstream:'سرویس هوش مصنوعی پاسخ نداد؛ کمی بعد دوباره تلاش کنید.',bad_q:'نام دارو را کامل‌تر بنویسید.',not_verified:'ابتدا احراز هویت را کامل کنید.',unauth:'نشست منقضی شده؛ دوباره وارد شوید.'};
+function mdLite(t){
+ const out=[];let ul=false;
+ for(const raw of String(t).split('\n')){
+  let l=esc(raw.trim()).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
+  if(!l){if(ul){out.push('</ul>');ul=false}continue}
+  const h=l.match(/^#{1,4}\s*(.+)$/);
+  if(h){if(ul){out.push('</ul>');ul=false}out.push(`<h4 style="margin:14px 0 4px;color:var(--pri)">${h[1]}</h4>`);continue}
+  const li=l.match(/^[-•*]\s+(.+)$/);
+  if(li){if(!ul){out.push('<ul style="margin:4px 0;padding:0 18px 0 0;line-height:1.9">');ul=true}out.push(`<li>${li[1]}</li>`);continue}
+  if(ul){out.push('</ul>');ul=false}out.push(`<p style="margin:6px 0;line-height:1.9">${l}</p>`)}
+ if(ul)out.push('</ul>');return out.join('')}
+const drugRes=()=>DR.busy?`<div class="mut" style="padding:14px 4px">در حال جمع‌آوری اطلاعات دارو … (چند ثانیه صبر کنید)</div>`:DR.err?`<div class="card" style="background:#fff1f1;color:#b42318;margin:10px 0 0">${esc(DR.err)}</div>`:DR.a?`<div class="card" style="margin:10px 0 0"><b>${esc(DR.q)}</b>${mdLite(DR.a)}<div class="mut" style="margin-top:10px;border-top:1px solid var(--bd,#0001);padding-top:8px">این توضیحات آموزشی است و جایگزین نظر پزشک یا داروساز نیست. بدون تجویز پزشک دارو شروع یا قطع نکنید.</div></div>`:'';
+const isDrugSec=s=>/دارو/.test(s.t||'')&&s.type=='info';
+function drugBox(){return `<div class="card"><div class="row" style="justify-content:flex-start">
+ <div class="tile t2" style="margin:0;width:48px;height:48px;border-radius:16px">${sic('pill',24)}</div><div><b>معرفی دارو با هوش مصنوعی</b><div class="mut">نام هر دارو را بنویسید؛ توضیح کامل می‌گیرید</div></div></div>
+ <div class="fld" style="margin-top:12px">${ic('pill',20)}<input id="dq" placeholder="مثلاً استامینوفن، آموکسی‌سیلین، متفورمین" value="${esc(DR.q)}" onkeydown="if(event.key=='Enter')askDrug()"></div>
+ <div class="chips" style="margin-top:8px">${['استامینوفن','ایبوپروفن','آموکسی‌سیلین','امپرازول','متفورمین'].map(x=>`<button onclick="askDrug('${x}')">${x}</button>`).join('')}</div>
+ <button style="width:100%;margin-top:10px" onclick="askDrug()" ${DR.busy?'disabled':''}>${ic('pill',17)} توضیح بده</button>
+ <div id="dres">${drugRes()}</div></div>`}
+function paintDrug(){const e=document.getElementById('dres');if(e)e.innerHTML=drugRes()}
+async function askDrug(q){
+ if(!S.verified){needKyc();return}
+ q=String(q||document.getElementById('dq').value||'').trim();
+ if(q.length<2){alert('نام دارو را بنویسید');return}
+ const inp=document.getElementById('dq');if(inp)inp.value=q;
+ if(DR.busy)return;DR.q=q;DR.a='';DR.err='';DR.busy=true;paintDrug();
+ try{
+  const r=await fetch(SB+'/functions/v1/medura-drug',{method:'POST',headers:{'Content-Type':'application/json',apikey:KEY,Authorization:'Bearer '+KEY},body:JSON.stringify({token:TOK,q})});
+  const j=await r.json().catch(()=>({}));
+  if(r.ok&&j.answer){DR.a=j.answer}
+  else DR.err=r.status==404?'سرویس هوش مصنوعی هنوز فعال نشده است.':(DERR[j.error]||'پاسخی دریافت نشد؛ کمی بعد دوباره تلاش کنید.');
+ }catch(e){DR.err='اتصال به سرور برقرار نشد.'}
+ DR.busy=false;paintDrug()}
+const _svc=svc;
+svc=function(){
+ const all=S.secs;let h;S.secs=all.filter(s=>!isDrugSec(s));
+ try{h=_svc()}finally{S.secs=all}
+ if(!S.secs.some(s=>!isDrugSec(s)))h=h.replace('<div class="card mut">هنوز خدمتی اضافه نشده.</div>','');
+ return h.replace('</h3>','</h3>'+drugBox())};
+
+/* ===== v7: AI doctor chat, home visit (Urmia), doctor withdraw ===== */
+Object.assign(ERR,{city_soon:'ویزیت در منزل فعلاً فقط در ارومیه انجام می‌شود؛ شهرهای دیگر به‌زودی',bad_address:'آدرس را کامل‌تر بنویسید (حداقل ۱۰ کاراکتر)',phone_nid:'باید تأیید کنید که شماره موبایل به نام همین کد ملی ثبت شده است',hv_many:'چند درخواست در انتظار دارید؛ تا رسیدگی به آن‌ها صبر کنید'});
+Object.assign(DERR,{bad_nid:'کد ملی معتبر نیست.',bad_age:'سن بیمار معتبر نیست.',server_error:'خطای سرور؛ کمی بعد دوباره تلاش کنید.'});
+function withdrawSoon(){alert('برداشت سهم شما به‌زودی فعال می‌شود.')}
+
+/* --- AI doctor chat --- */
+const AIW='سلام، من دستیار پزشکی مدیورا هستم. مشکل یا علائم بیمار را بنویسید (مثلاً «از دیروز گلودرد و تب دارم»).';
+const AIC={step:0,msgs:[],hist:[],age:null,nid:'',busy:false,used:null,limit:null};
+function aiReset(){AIC.step=0;AIC.msgs=[{r:'bot',t:AIW}];AIC.hist=[];AIC.age=null;AIC.nid='';AIC.busy=false;AIC.used=null;AIC.limit=null}
+aiReset();
+const aiBub=x=>`<div class="cm ${x.r}${x.w?' warn':''}">${x.ai?mdLite(x.t):esc(x.t)}</div>`;
+function aiTab(){
+ if(!S.verified)return kyc();
+ const ph=['مشکل یا علائم را بنویسید…','سن بیمار (فقط عدد)','کد ملی بیمار (۱۰ رقم)','پاسخ یا سؤال بعدی را بنویسید…'][AIC.step];
+ const num=AIC.step==1||AIC.step==2;
+ return `<h3>${ic('heart',20)} مشاوره‌ی پزشکی هوشمند</h3>
+ <div class="cm warn" style="max-width:100%;margin:0 0 6px">این بخش جایگزین پزشک نیست. در شرایط اورژانسی (درد قفسه‌ی سینه، تنگی نفس، خونریزی شدید، بی‌هوشی) فوراً با ۱۱۵ تماس بگیرید.</div>
+ <div class="cb">${AIC.msgs.map(aiBub).join('')}${AIC.busy?'<div class="cm bot mut">در حال بررسی … (چند ثانیه صبر کنید)</div>':''}</div>
+ <div class="cin"><input id="ci" placeholder="${ph}" ${num?'inputmode="numeric"':''} ${AIC.busy?'disabled':''} onkeydown="if(event.key=='Enter')aiSend()"><button onclick="aiSend()" ${AIC.busy?'disabled':''}>ارسال</button></div>
+ <div class="row" style="margin-top:10px"><span class="mut">${AIC.used&&AIC.limit&&AIC.limit<10000?fa(AIC.used)+' از '+fa(AIC.limit)+' پرسش امروز':''}</span><button class="g" style="padding:6px 12px" onclick="aiNew()">مشاوره‌ی جدید</button></div>
+ ${AIC.step==3&&AIC.hist.length>=2?`<button class="g" style="width:100%;margin-top:10px" onclick="go('visit')">${ic('cal',17)} گرفتن ویزیت با پزشک</button>`:''}`}
+function aiPaint(){draw();const e=document.getElementById('ci');if(e&&!AIC.busy)e.focus();m.scrollTop=m.scrollHeight}
+function aiNew(){aiReset();aiPaint();m.scrollTop=0}
+async function aiSend(){
+ if(AIC.busy)return;
+ const el=document.getElementById('ci');if(!el)return;
+ const v=(el.value||'').trim();if(!v)return;
+ const st=AIC.step;
+ if(st==0){
+  if(v.length<4){alert('مشکل را کمی کامل‌تر بنویسید');return}
+  AIC.msgs.push({r:'me',t:v});AIC.hist.push({role:'user',content:v});
+  AIC.msgs.push({r:'bot',t:'ممنون. بیمار چند سال دارد؟ (فقط عدد، مثلاً ۱۴)'});AIC.step=1;aiPaint();return}
+ if(st==1){
+  const a=+lat(v);if(!Number.isInteger(a)||a<1||a>120){alert('سن را فقط با عدد بنویسید (۱ تا ۱۲۰)');return}
+  AIC.age=a;AIC.msgs.push({r:'me',t:fa(a)+' سال'});
+  AIC.msgs.push({r:'bot',t:'کد ملی بیمار را وارد کنید (۱۰ رقم). این کد فقط برای ثبت پرونده‌ی مشاوره نگه‌داری می‌شود و برای هوش مصنوعی ارسال نمی‌شود.'});AIC.step=2;aiPaint();return}
+ if(st==2){
+  const c=lat(v);if(!nidOk(c)){alert('کد ملی معتبر نیست؛ دوباره بررسی کنید');return}
+  AIC.nid=c;AIC.msgs.push({r:'me',t:(c.slice(0,3)+'****'+c.slice(7)).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d])});AIC.step=3;
+  if(AIC.age<18)AIC.msgs.push({r:'bot',t:'چون سن بیمار زیر ۱۸ سال است، بهتر است والدین هم در جریان باشند.',w:1});
+  return aiAsk()}
+ AIC.msgs.push({r:'me',t:v});AIC.hist.push({role:'user',content:v});return aiAsk()}
+async function aiAsk(){
+ AIC.busy=true;aiPaint();
+ let err='';
+ try{
+  const r=await fetch(SB+'/functions/v1/medura-doctor',{method:'POST',headers:{'Content-Type':'application/json',apikey:KEY,Authorization:'Bearer '+KEY},body:JSON.stringify({token:TOK,age:AIC.age,nid:AIC.hist.length==1?AIC.nid:undefined,msgs:AIC.hist.slice(-13)})});
+  const j=await r.json().catch(()=>({}));
+  if(r.ok&&j.answer){AIC.msgs.push({r:'bot',t:j.answer,ai:1});AIC.hist.push({role:'assistant',content:j.answer});AIC.used=j.used;AIC.limit=j.limit}
+  else err=r.status==404?'سرویس هوش مصنوعی هنوز فعال نشده است.':(DERR[j.error]||'پاسخی دریافت نشد؛ کمی بعد دوباره تلاش کنید.');
+ }catch(e){err='اتصال به سرور برقرار نشد.'}
+ if(err){if(AIC.hist.length&&AIC.hist[AIC.hist.length-1].role=='user')AIC.hist.pop();AIC.msgs.push({r:'bot',t:err+' پیام خود را دوباره بفرستید.',w:1})}
+ AIC.busy=false;aiPaint()}
+
+/* --- home visit (Urmia only for now) --- */
+const HV={rows:null,loading:false};
+const hvSt={new:'در انتظار هماهنگی',done:'انجام شد',cancel:'لغو شد'};
+const hvPrice=()=>+CFG.homevisit_price||0;
+async function hvLoad(){if(HV.loading||!TOK)return;HV.loading=true;try{HV.rows=await rpc('m_my_home_visits',{p_token:TOK})}catch(e){HV.rows=[]}HV.loading=false;if(S.tab=='svc')draw()}
+function hvBox(){
+ if(HV.rows===null&&TOK)hvLoad();
+ const p=hvPrice(),rows=HV.rows||[];
+ return `<div class="card"><div class="row" style="justify-content:flex-start"><div class="tile t3" style="margin:0;width:48px;height:48px;border-radius:16px">${ic('home',24)}</div><div><b>ویزیت در منزل</b><div class="mut">پزشک به آدرس شما می‌آید</div></div></div>
+ <div class="row" style="margin-top:10px"><span class="badge">${p?'هزینه: '+fa(p)+' هزار تومان':'هزینه: به‌زودی اعلام می‌شود'}</span><span class="mut">فقط ارومیه</span></div>
+ <select id="hvc"><option value="ارومیه">ارومیه</option><option disabled>شهرهای دیگر — به‌زودی</option></select>
+ <textarea id="hva" rows="3" maxlength="300" placeholder="آدرس کامل (محله، خیابان، پلاک، واحد)"></textarea>
+ <input id="hvw" maxlength="80" placeholder="زمان مناسب (مثلاً فردا عصر)">
+ <textarea id="hvn" rows="2" maxlength="500" placeholder="توضیح مشکل (اختیاری)"></textarea>
+ <button style="width:100%;margin-top:8px" onclick="hvSend()">${ic('home',17)} ثبت درخواست ویزیت در منزل</button>
+ ${rows.length?`<div class="mut" style="margin:12px 2px 4px">درخواست‌های من</div>`+rows.slice(0,3).map(x=>`<div class="row" style="margin-top:6px"><span class="mut">${esc(new Date(x.created_at).toLocaleDateString('fa-IR'))} · ${esc(x.city)}</span><span class="badge">${hvSt[x.status]||esc(x.status)}</span></div>`).join(''):''}</div>`}
+async function hvSend(){
+ if(!S.verified){needKyc();return}
+ const a=hva.value.trim();if(a.length<10){alert(ERR.bad_address);return}
+ try{const r=await rpc('m_home_visit',{p_token:TOK,p_city:'ارومیه',p_address:a,p_when:hvw.value,p_note:hvn.value});
+  HV.rows=null;alert('درخواست ثبت شد. همکاران ما برای هماهنگی با شما تماس می‌گیرند.'+(r&&r.price?'\nهزینه: '+fa(r.price)+' هزار تومان':''));draw()}catch(e){fail(e)}}
+const _svc2=svc;
+svc=function(){return _svc2().replace('</h3>','</h3>'+hvBox())};
+function hvHtml(){return (AD.hv||[]).map(x=>`<div class="card"><div class="row"><b>${esc(x.who||'—')}</b><span class="badge">${hvSt[x.status]||esc(x.status)}</span></div>
+ <div class="mut" style="margin-top:6px;line-height:1.9"><span dir="ltr">${esc(x.phone)}</span> · ${esc(x.city)}${x.when_text?' · '+esc(x.when_text):''}${x.price?' · '+fa(x.price)+' هزار تومان':''}<br>${esc(x.address)}${x.note?'<br>'+esc(x.note):''}</div>
+ <div class="row" style="margin-top:10px"><button style="flex:1" onclick="admCall('m_adm_home_visit_status',{p_id:${x.id},p_status:'done'})">انجام شد</button><button class="r" style="flex:1" onclick="admCall('m_adm_home_visit_status',{p_id:${x.id},p_status:'cancel'})">لغو</button></div></div>`).join('')||'<div class="card mut">درخواستی نیست</div>'}
+function promoRow(){return `<div class="pr2"><div class="card" onclick="go('ai')"><div class="tile" style="margin:0 auto 8px;width:46px;height:46px;border-radius:15px">${ic('heart',22)}</div><b>مشاوره‌ی هوشمند</b><div class="mut" style="font-size:12px">علائم را بگویید؛ راهنمایی بگیرید</div></div><div class="card" onclick="go('svc')"><div class="tile t3" style="margin:0 auto 8px;width:46px;height:46px;border-radius:15px">${ic('home',22)}</div><b>ویزیت در منزل</b><div class="mut" style="font-size:12px">فقط ارومیه · شهرهای دیگر به‌زودی</div></div></div>`}
+
+
+/* ===== Myket payments (in-app billing through the Android bridge) =====
+   Needs the APK wrapper to expose window.MedAndroid (see android/README.md).
+   Every purchase is verified on the server (edge function myket-verify) before coins/subscription are granted. */
+const PAY={
+  pkg:'com.medura.app', /* must equal the package name registered in Myket */
+  coinPacks:[{sku:'coins_50',coins:50,toman:100000},{sku:'coins_100',coins:100,toman:200000},{sku:'coins_250',coins:250,toman:500000}],
+  pending:{},busy:false
+};
+const PERR={bad_input:'درخواست نامعتبر است',bad_sku:'این بسته در حال حاضر فروخته نمی‌شود',unauth:'نشست منقضی شد؛ دوباره وارد شوید',not_verified:'ابتدا احراز هویت را کامل کنید',bad_purchase:'پرداخت شما در مایکت تأیید نشد',payload_mismatch:'این خرید متعلق به حساب دیگری است',token_used:'این پرداخت قبلاً برای حساب دیگری ثبت شده است',myket_unreachable:'ارتباط با مایکت برقرار نشد؛ کمی بعد دوباره تلاش کنید'};
+PAY.storeUrl=()=>'https://myket.ir/app/'+PAY.pkg;
+PAY.ready=()=>{try{return !!(window.MedAndroid&&window.MedAndroid.isMyketReady())}catch(e){return false}};
+PAY.call=function(fn,...a){return new Promise((res,rej)=>{
+  const id='r'+Date.now()+Math.random().toString(36).slice(2,7);
+  const t=setTimeout(()=>{delete PAY.pending[id];rej(new Error('پاسخی از مایکت دریافت نشد'))},600000);
+  PAY.pending[id]=r=>{clearTimeout(t);res(r)};
+  try{window.MedAndroid[fn](...a,id)}catch(e){clearTimeout(t);delete PAY.pending[id];rej(e)}})};
+window.onMyketResult=function(id,json){const f=PAY.pending[id];if(!f)return;delete PAY.pending[id];let r;try{r=typeof json==='string'?JSON.parse(json):json}catch(e){r={ok:false,message:'پاسخ نامعتبر از مایکت'}}f(r)};
+PAY.noMyket=function(){modal(`<div class="row"><b>پرداخت با مایکت</b><button class="g" style="padding:6px 12px" onclick="closeM()">بستن</button></div>
+ <p class="mut" style="line-height:1.9">پرداخت درون‌برنامه‌ای فقط در نسخهٔ اندروید مدیورا که از مایکت نصب شده، و با نصب بودن مایکت روی گوشی انجام می‌شود.</p>
+ <button style="width:100%" onclick="location.href=PAY.storeUrl()">نصب / به‌روزرسانی از مایکت</button>`)};
+PAY.start=async function(sku){
+  if(!S.verified)return needKyc();
+  if(PAY.busy)return;
+  if(!PAY.ready())return PAY.noMyket();
+  PAY.busy=true;
+  try{
+    const r=await PAY.call('purchase',sku,String(S.phone||''));
+    if(!r||!r.ok){if(r&&r.code==='cancel')return;throw new Error((r&&r.message)||'پرداخت انجام نشد')}
+    await PAY.finish(r);
+  }catch(e){fail(e)}finally{PAY.busy=false}
+};
+PAY.finish=async function(r){
+  const res=await fetch(SB+'/functions/v1/myket-verify',{method:'POST',headers:{'Content-Type':'application/json',apikey:KEY,Authorization:'Bearer '+KEY},body:JSON.stringify({token:TOK,sku:r.sku,purchase_token:r.purchaseToken,payload:r.payload||''})});
+  const j=await res.json().catch(()=>null);
+  if(!res.ok||!j||!j.ok)throw new Error(PERR[j&&j.error]||'پرداخت انجام شد اما تأیید آن کامل نشد؛ با باز کردن دوبارهٔ برنامه، خودکار پیگیری می‌شود');
+  try{await PAY.call('consume',r.purchaseToken)}catch(e){}
+  await sync();
+  alert(j.kind==='sub'?'پرداخت موفق بود؛ اشتراک شما فعال شد':'پرداخت موفق بود؛ سکه‌ها به حساب شما اضافه شد');
+};
+/* purchases that were paid but not yet credited (app closed, network lost…) */
+PAY.recover=async function(){
+  if(!TOK||!PAY.ready()||PAY.busy)return;
+  try{const r=await PAY.call('queryPurchases');for(const p of ((r&&r.purchases)||[])){try{await PAY.finish(p)}catch(e){}}}catch(e){}
+};
+PAY.openCoins=function(){
+  if(!S.verified)return needKyc();
+  modal(`<div class="row"><b>خرید سکه</b><button class="g" style="padding:6px 12px" onclick="closeM()">بستن</button></div>
+  <div class="mut" style="margin:6px 0">پرداخت امن از طریق مایکت</div>`+PAY.coinPacks.map(p=>`<div class="card row" style="margin:10px 0 0"><div><b>${fa(p.coins)} سکه</b><div class="mut">${fa(p.toman)} تومان</div></div><button onclick="closeM();PAY.start('${p.sku}')">پرداخت</button></div>`).join(''))};
+PAY.buySub=function(i){const r=TIERS[S.pt].p[i];PAY.start('sub_'+S.pt+'_'+r[0])};
+theme();
+draw();
+if(TOK)sync().then(()=>PAY.recover()).catch(fail);
+</script>
+</body>
+</html>
